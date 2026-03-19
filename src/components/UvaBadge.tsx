@@ -19,10 +19,10 @@ export function UvaBadge() {
       >
         <Badge
           variant="outline"
-          className="relative overflow-hidden border-white/20 bg-white/60 px-3 py-1 text-[10px] font-medium tracking-wide backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-900/40"
+          className="relative overflow-hidden border-white/20 bg-[#285A48] px-3 py-1 text-[10px] text-white font-medium tracking-wide backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-900/40"
         >
           <span className="relative z-10">
-            CHARLOTTESVILLE / UVA CS &apos;29
+            CHARLOTTESVILLE | UVA CS &apos;29
           </span>
 
           <motion.span

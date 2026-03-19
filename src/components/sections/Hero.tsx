@@ -3,10 +3,11 @@
 import { useCallback, useMemo, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { CopyIcon, FileTextIcon, GithubIcon, LinkedinIcon, MailIcon, SparklesIcon } from "lucide-react"
+import { CopyIcon, MailIcon } from "lucide-react"
 import headshot from "@/assets/headshot.png"
 
 import { Button } from "@/components/ui/button"
+import { LearningStatus } from "@/components/learning/LearningStatus"
 
 const defaultEmail = "you@example.com"
 const displayName = "Tony Lam"
@@ -23,11 +24,6 @@ export function Hero() {
     return process.env.NEXT_PUBLIC_CONTACT_EMAIL || defaultEmail
   }, [])
 
-  const avatarUrl = process.env.NEXT_PUBLIC_AVATAR_URL || ""
-  const linkedinUrl = process.env.NEXT_PUBLIC_LINKEDIN_URL || ""
-  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL || ""
-  const resumeUrl = process.env.NEXT_PUBLIC_RESUME_URL || ""
-
   const [copied, setCopied] = useState(false)
 
   const onCopyEmail = useCallback(async () => {
@@ -36,7 +32,6 @@ export function Hero() {
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1200)
     } catch {
-      // If clipboard API fails, do nothing (user can still type contact form).
     }
   }, [email])
 
@@ -48,10 +43,10 @@ export function Hero() {
   const initials = useMemo(() => initialsFromName(displayName), [])
 
   return (
-    <section aria-label="Hero" className="relative overflow-hidden py-16">
+    <section aria-label="Hero" className="relative overflow-hidden py-36 md:py-52">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_0%,rgba(28,53,45,0.22),transparent_40%),radial-gradient(circle_at_80%_10%,rgba(28,53,45,0.12),transparent_45%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-white"
       />
 
       <div className="mx-auto w-full max-w-5xl px-6">
@@ -64,8 +59,7 @@ export function Hero() {
           <div className="flex-1">
             <div className="flex items-center gap-2 text-sm text-zinc-700">
               <span className="font-semibold">
-                Hi! I am{" "}
-                <span className="font-extrabold text-[#1C352D]">{displayName}</span>
+                Available for work
               </span>
             </div>
 
@@ -76,7 +70,7 @@ export function Hero() {
                 transition={{ delay: 0.08, duration: 0.45 }}
                 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl"
               >
-                Building apps that feel fast and look calm.
+               Hi, I&apos;m Tony 
               </motion.h1>
 
               <motion.p
@@ -85,55 +79,35 @@ export function Hero() {
                 transition={{ delay: 0.14, duration: 0.45 }}
                 className="max-w-2xl text-pretty text-zinc-600"
               >
-                I like to take ideas from prototype to polished UI. Projects below are interactive,
-                and my learning status stays up to date.
+              <p className="text-zinc-600">
+                Tinkering with <span className="text-[#1C352D] font-bold">Neovim</span>, 
+                the <span className="text-[#1C352D] font-bold">gym</span>, 
+                and scaling <span className="text-[#1C352D] font-bold">full-stack architecture</span>.
+              </p>
               </motion.p>
             </div>
 
+            <div className="pt-4">
+              <LearningStatus compact showSection={false} />
+            </div>
+
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Button onClick={onCopyEmail} variant="secondary" className="gap-2">
+              <Button
+                onClick={onCopyEmail}
+                variant="secondary"
+                className="cursor-pointer gap-2"
+              >
                 {copied ? <MailIcon className="size-4" /> : <CopyIcon className="size-4" />}
                 {copied ? "Copied!" : "Copy email"}
               </Button>
 
-              <Button onClick={onViewProjects} variant="outline" className="gap-2">
+              <Button
+                onClick={onViewProjects}
+                variant="outline"
+                className="cursor-pointer gap-2"
+              >
                 View projects
               </Button>
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {linkedinUrl ? (
-                <Button
-                  variant="outline"
-                  className="h-9 gap-2"
-                  onClick={() => window.open(linkedinUrl, "_blank", "noreferrer")}
-                >
-                  <LinkedinIcon className="size-4" />
-                  LinkedIn
-                </Button>
-              ) : null}
-
-              {githubUrl ? (
-                <Button
-                  variant="outline"
-                  className="h-9 gap-2"
-                  onClick={() => window.open(githubUrl, "_blank", "noreferrer")}
-                >
-                  <GithubIcon className="size-4" />
-                  GitHub
-                </Button>
-              ) : null}
-
-              {resumeUrl ? (
-                <Button
-                  variant="outline"
-                  className="h-9 gap-2"
-                  onClick={() => window.open(resumeUrl, "_blank", "noreferrer")}
-                >
-                  <FileTextIcon className="size-4" />
-                  Resume
-                </Button>
-              ) : null}
             </div>
           </div>
 

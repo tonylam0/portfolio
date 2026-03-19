@@ -24,11 +24,11 @@ export function GithubHeatmap() {
           </div>
 
           {src ? (
-            <div className="mt-5 overflow-x-auto">
+            <div className="mt-5 flex justify-center overflow-x-auto">
               <img
                 src={src}
                 alt={`GitHub contributions heatmap for ${username}`}
-                className="min-w-[520px]"
+                className="mx-auto min-w-[520px]"
                 loading="lazy"
               />
             </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion, useMotionValue } from "framer-motion"
 import { ExternalLinkIcon } from "lucide-react"
 
 import { projects, projectTags, type Project } from "@/content/projects"
@@ -21,6 +21,37 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+
+function escapeSvg(text: string) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+}
+
+function projectPreviewSrc(project: Project) {
+  const colorPool = ["#1C352D", "#0F766E", "#2563EB", "#7C3AED", "#059669", "#DC2626"]
+  const seed = Array.from(project.id).reduce((acc, ch) => acc + ch.charCodeAt(0), 0)
+  const color = colorPool[seed % colorPool.length]
+  const title = escapeSvg(project.title)
+  const tag = escapeSvg(project.tags[0] ?? "")
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="${color}" stop-opacity="1"/>
+          <stop offset="1" stop-color="#0b1220" stop-opacity="0.7"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="10" width="300" height="180" rx="18" fill="url(#g)"/>
+      <rect x="10" y="10" width="300" height="180" rx="18" fill="none" stroke="rgba(255,255,255,0.18)"/>
+      <text x="160" y="92" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="20" font-weight="700" fill="#ffffff">${title}</text>
+      <text x="160" y="132" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="14" font-weight="600" fill="rgba(255,255,255,0.85)">${tag}</text>
+      <circle cx="68" cy="52" r="8" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="248" cy="56" r="6" fill="rgba(255,255,255,0.18)"/>
+    </svg>
+  `.trim()
+
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
+}
 
 function ProjectDialogBody({ project }: { project: Project }) {
   return (
@@ -87,6 +118,10 @@ export function ProjectsBento() {
   const [tag, setTag] = useState<string>("All")
   const [open, setOpen] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null)
+
+  const cursorX = useMotionValue(0)
+  const cursorY = useMotionValue(0)
 
   const filteredProjects = useMemo(() => {
     if (tag === "All") return projects
@@ -97,6 +132,15 @@ export function ProjectsBento() {
     if (!activeId) return null
     return projects.find((p) => p.id === activeId) ?? null
   }, [activeId])
+
+  const hoveredProject = useMemo(() => {
+    if (!hoveredProjectId) return null
+    return projects.find((p) => p.id === hoveredProjectId) ?? null
+  }, [hoveredProjectId])
+
+  const previewSrc = useMemo(() => {
+    return hoveredProject ? projectPreviewSrc(hoveredProject) : ""
+  }, [hoveredProject])
 
   const onTagChange = (nextTag: string) => {
     setTag(nextTag)
@@ -130,7 +174,11 @@ export function ProjectsBento() {
           >
             <TabsList className="h-auto flex-wrap gap-2 p-1">
               {projectTags.map((t) => (
-                <TabsTrigger key={t} value={t} className="px-2 py-1 text-xs">
+                <TabsTrigger
+                  key={t}
+                  value={t}
+                  className="cursor-pointer px-2 py-1 text-xs"
+                >
                   {t}
                 </TabsTrigger>
               ))}
@@ -151,7 +199,15 @@ export function ProjectsBento() {
               transition={{ delay: i * 0.03, duration: 0.35 }}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.99 }}
-              className={`text-left focus-visible:outline-none ${p.gridClassName}`}
+              className={`cursor-pointer text-left focus-visible:outline-none ${p.gridClassName} ${
+                hoveredProjectId === p.id ? "dark" : ""
+              }`}
+              onMouseEnter={() => setHoveredProjectId(p.id)}
+              onMouseLeave={() => setHoveredProjectId((id) => (id === p.id ? null : id))}
+              onMouseMove={(e) => {
+                cursorX.set(e.clientX)
+                cursorY.set(e.clientY)
+              }}
               onClick={() => {
                 setActiveId(p.id)
                 setOpen(true)
@@ -184,6 +240,33 @@ export function ProjectsBento() {
             </motion.button>
           ))}
         </div>
+
+        {/* Hover preview that appears next to your cursor */}
+        <AnimatePresence>
+          {hoveredProject && previewSrc ? (
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none fixed z-[60]"
+              style={{
+                left: cursorX,
+                top: cursorY,
+                translateX: 18,
+                translateY: -30,
+              }}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.12 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={previewSrc}
+                alt=""
+                className="h-[86px] w-[136px] rounded-xl border border-white/15 bg-black/20 object-cover shadow-lg"
+              />
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
 
         <Dialog
           open={open}

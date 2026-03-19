@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { ElementType, useEffect, useMemo, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 
 import { learningItems } from "@/content/learning"
@@ -19,7 +19,19 @@ function formatUpdatedAt(iso: string) {
   })
 }
 
-export function LearningStatus() {
+export type LearningStatusProps = {
+  /**
+   * Compact card variant for embedding (hero).
+   * Keeps the same interactivity, but reduces spacing/sizing.
+   */
+  compact?: boolean
+  /**
+   * Whether to wrap in a <section>. For embedding, use showSection=false.
+   */
+  showSection?: boolean
+}
+
+export function LearningStatus({ compact = false, showSection = true }: LearningStatusProps) {
   const reducedMotion = useReducedMotion()
   const items = learningItems
 
@@ -44,13 +56,24 @@ export function LearningStatus() {
     return () => window.clearInterval(id)
   }, [items.length, paused, reducedMotion])
 
+  const wrapClassName = compact ? "px-0" : "px-6"
+  const cardPadding = compact ? "p-4" : "p-6"
+  const sectionPadding = compact ? "" : "py-14"
+  const titleClass = compact ? "text-lg" : "text-xl"
+
+  const Wrapper: ElementType = showSection ? "section" : "div"
+
   return (
-    <section id="learning" aria-label="Always learning" className="py-14">
-      <div className="mx-auto w-full max-w-5xl px-6">
+    <Wrapper
+      id="learning"
+      aria-label="Always learning"
+      className={sectionPadding}
+    >
+      <div className={`mx-auto w-full max-w-5xl ${wrapClassName}`}>
         <Card
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative overflow-hidden p-6"
+          className={`relative overflow-hidden ${cardPadding}`}
         >
           <div
             aria-hidden="true"
@@ -61,7 +84,7 @@ export function LearningStatus() {
             <div className="flex items-center gap-2">
               <motion.span
                 aria-hidden="true"
-                className="relative inline-flex h-2.5 w-2.5 items-center justify-center rounded-full bg-[#1C352D]"
+                className={`relative inline-flex ${compact ? "h-2 w-2" : "h-2.5 w-2.5"} items-center justify-center rounded-full bg-[#1C352D]`}
                 animate={{ scale: [1, 1.25, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -74,7 +97,11 @@ export function LearningStatus() {
             </div>
           </div>
 
-          <div className="mt-5 flex flex-col gap-3">
+          <div
+            className={
+              compact ? "mt-3 flex flex-col gap-3" : "mt-5 flex flex-col gap-3"
+            }
+          >
             <AnimatePresence mode="wait">
               <motion.h3
                 key={current.id}
@@ -82,7 +109,7 @@ export function LearningStatus() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.35 }}
-                className="text-xl font-semibold tracking-tight"
+                className={`${titleClass} font-semibold tracking-tight`}
               >
                 {current.title}
               </motion.h3>
@@ -138,7 +165,11 @@ export function LearningStatus() {
             ) : null}
           </AnimatePresence>
 
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div
+            className={
+              compact ? "mt-4 flex flex-wrap gap-2" : "mt-6 flex flex-wrap gap-2"
+            }
+          >
             <Button
               variant="secondary"
               className="gap-2"
@@ -160,7 +191,7 @@ export function LearningStatus() {
           </div>
         </Card>
       </div>
-    </section>
+    </Wrapper>
   )
 }
 

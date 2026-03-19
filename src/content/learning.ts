@@ -10,17 +10,14 @@ export type LearningItem = {
 export const learningItems: LearningItem[] = [
   {
     id: "react-perf",
-    title: "React performance patterns",
-    summary: "Keeping UIs snappy with render profiling and smarter state updates.",
+    title: "Learning AWS",
+    summary: "Currently studying to pass my AWS Certified Cloud Practitioner Exam",
     details: [
-      "Spot expensive renders with React DevTools Profiler",
-      "Prefer derived state and memoization where it actually helps",
-      "Design animations to be lightweight and interruption-safe",
+      "Studying through a 14 hour YouTube course",
+      "Taking as many practice tests I can",
+      "Taking the exam on March 20th, 2026",
     ],
-    links: [
-      { label: "React Docs: Rendering", href: "https://react.dev/learn/rendering-lists" },
-    ],
-    updatedAtISO: "2026-03-19T10:00:00.000Z",
+    updatedAtISO: "2026-03-20T20:00:00.000Z",
   },
   {
     id: "next-security",
@@ -45,4 +42,3 @@ export const learningItems: LearningItem[] = [
     updatedAtISO: "2026-03-17T12:15:00.000Z",
   },
 ]
-

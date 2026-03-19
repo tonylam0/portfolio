@@ -4,6 +4,7 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import { CursorCircle } from "@/components/CursorCircle";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <CursorCircle />
         </ThemeProvider>
       </body>
     </html>
