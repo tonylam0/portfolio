@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { CopyIcon, FileTextIcon, GithubIcon, LinkedinIcon, MailIcon, SparklesIcon } from "lucide-react"
+import headshot from "@/assets/headshot.png"
 
 import { Button } from "@/components/ui/button"
 
@@ -149,9 +150,9 @@ export function Hero() {
                 className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(28,53,45,0.18),transparent_45%)]"
               />
 
-              {avatarUrl ? (
+              {headshot ? (
                 <Image
-                  src={avatarUrl}
+                  src={headshot}
                   alt={`${displayName} headshot`}
                   width={260}
                   height={260}
