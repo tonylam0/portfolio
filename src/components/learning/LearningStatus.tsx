@@ -88,7 +88,7 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
                 animate={{ scale: [1, 1.25, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               />
-              <Badge variant="secondary">Live learning</Badge>
+              <Badge variant="secondary">What I'm current learning</Badge>
             </div>
 
             <div className="text-right text-xs text-zinc-600 dark:text-zinc-300">
@@ -194,4 +194,3 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
     </Wrapper>
   )
 }
-

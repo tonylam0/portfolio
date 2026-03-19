@@ -11,9 +11,9 @@ export default function Page() {
       <UvaBadge />
       <Hero />
       <div className="border-t border-[#1C352D]/15 bg-[#F0F7F3]">
-        <GithubHeatmap />
         <ProjectsBento />
         <ContactForm />
+        <GithubHeatmap />
         <SocialLinks />
       </div>
     </main>

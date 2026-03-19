@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { CopyIcon, MailIcon } from "lucide-react"
@@ -11,6 +11,12 @@ import { LearningStatus } from "@/components/learning/LearningStatus"
 
 const defaultEmail = "you@example.com"
 const displayName = "Tony Lam"
+const heroTitles = [
+  "Tony",
+  "a UVA student",
+  "a full-stack developer",
+  "a problem solver",
+]
 
 function initialsFromName(name: string) {
   const parts = name.split(/\s+/).filter(Boolean)
@@ -25,6 +31,9 @@ export function Hero() {
   }, [])
 
   const [copied, setCopied] = useState(false)
+  const [titleIndex, setTitleIndex] = useState(0)
+  const [typedTitle, setTypedTitle] = useState(heroTitles[0])
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const onCopyEmail = useCallback(async () => {
     try {
@@ -42,8 +51,33 @@ export function Hero() {
 
   const initials = useMemo(() => initialsFromName(displayName), [])
 
+  useEffect(() => {
+    const current = heroTitles[titleIndex]
+    const nextLength = isDeleting ? typedTitle.length - 1 : typedTitle.length + 1
+    const nextText = current.slice(0, Math.max(nextLength, 0))
+
+    const timeout = window.setTimeout(
+      () => {
+        setTypedTitle(nextText)
+
+        if (!isDeleting && nextText === current) {
+          window.setTimeout(() => setIsDeleting(true), 1150)
+          return
+        }
+
+        if (isDeleting && nextText === "") {
+          setIsDeleting(false)
+          setTitleIndex((i) => (i + 1) % heroTitles.length)
+        }
+      },
+      isDeleting ? 55 : 95,
+    )
+
+    return () => window.clearTimeout(timeout)
+  }, [isDeleting, titleIndex, typedTitle])
+
   return (
-    <section aria-label="Hero" className="relative overflow-hidden py-36 md:py-52">
+    <section aria-label="Hero" className="relative overflow-hidden py-32 md:py-40">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-white"
@@ -70,7 +104,11 @@ export function Hero() {
                 transition={{ delay: 0.08, duration: 0.45 }}
                 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl"
               >
-               Hi, I&apos;m Tony 
+                Hi, I&apos;m {typedTitle}
+                <span
+                  aria-hidden="true"
+                  className="ml-1 inline-block h-[0.9em] w-[3px] md:w-[6px] bg-[#1C352D] animate-pulse align-middle"
+                />
               </motion.h1>
 
               <motion.p
@@ -79,15 +117,13 @@ export function Hero() {
                 transition={{ delay: 0.14, duration: 0.45 }}
                 className="max-w-2xl text-pretty text-zinc-600"
               >
-              <p className="text-zinc-600">
-                Tinkering with <span className="text-[#1C352D] font-bold">Neovim</span>, 
-                the <span className="text-[#1C352D] font-bold">gym</span>, 
+                Tinkering with <span className="text-[#1C352D] font-bold">Neovim</span>,
+                the <span className="text-[#1C352D] font-bold">gym</span>,
                 and scaling <span className="text-[#1C352D] font-bold">full-stack architecture</span>.
-              </p>
               </motion.p>
             </div>
 
-            <div className="pt-4">
+            <div className="max-w-2xl pt-4">
               <LearningStatus compact showSection={false} />
             </div>
 
