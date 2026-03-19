@@ -16,6 +16,7 @@ const heroTitles = [
   "a UVA student",
   "a full-stack developer",
   "a problem solver",
+  "a lifelong learner",
 ]
 
 function initialsFromName(name: string) {

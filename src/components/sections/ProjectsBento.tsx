@@ -155,14 +155,14 @@ export function ProjectsBento() {
   }
 
   return (
-    <section id="projects" aria-label="Projects" className="py-16">
+    <section id="yes" aria-label="Projects" className="py-16 text-white">
       <div className="mx-auto w-full max-w-5xl px-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-balance text-2xl font-semibold tracking-tight">
               Projects
             </h2>
-            <p className="mt-1 max-w-prose text-sm text-zinc-600 dark:text-zinc-300">
+            <p className="mt-1 max-w-prose text-sm text-white/80 dark:text-zinc-300">
               Click any card for details. Filter by tag to find what you care about.
             </p>
           </div>
@@ -177,7 +177,7 @@ export function ProjectsBento() {
                 <TabsTrigger
                   key={t}
                   value={t}
-                  className="cursor-pointer px-2 py-1 text-xs"
+                  className="cursor-pointer px-2 py-1 text-xs text-black transition-colors hover:text-[#2F5755] data-[state=active]:text-[#95BDC6]"
                 >
                   {t}
                 </TabsTrigger>
@@ -194,12 +194,19 @@ export function ProjectsBento() {
             <motion.button
               key={p.id}
               type="button"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.03, duration: 0.35 }}
+              initial={{ opacity: 0, y: 24, scale: 0.92 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{
+                delay: i * 0.08,
+                type: "spring",
+                stiffness: 190,
+                damping: 18,
+                mass: 0.7,
+              }}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.99 }}
-              className={`cursor-pointer text-left focus-visible:outline-none ${p.gridClassName} ${
+              className={`group cursor-pointer text-left focus-visible:outline-none ${p.gridClassName} ${
                 hoveredProjectId === p.id ? "dark" : ""
               }`}
               onMouseEnter={() => setHoveredProjectId(p.id)}
@@ -213,27 +220,33 @@ export function ProjectsBento() {
                 setOpen(true)
               }}
             >
-              <Card className="h-full p-5 ring-1 ring-foreground/10 transition-[filter] group/card">
-                <div className="flex items-start justify-between gap-4">
+              <Card className="relative h-full overflow-hidden bg-[#A0D585] p-5 text-zinc-800 ring-1 ring-foreground/10">
+                <div className="absolute inset-0 z-0 origin-top scale-y-0 bg-white transition-transform duration-300 ease-out group-hover:scale-y-100 group-focus-visible:scale-y-100" />
+
+                <div className="relative z-10 flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <div className="text-base font-semibold tracking-tight">
                       {p.title}
                     </div>
-                    <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+                    <p className="mt-1 text-sm text-zinc-700 transition-colors duration-200 group-hover:text-zinc-900 group-focus-visible:text-zinc-900">
                       {p.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="relative z-10 mt-4 flex flex-wrap gap-2">
                   {p.tags.slice(0, 4).map((t) => (
-                    <Badge key={t} variant="secondary" className="h-5 px-2 text-[11px]">
+                    <Badge
+                      key={t}
+                      variant="secondary"
+                      className="h-5 border border-zinc-900/10 bg-white/55 px-2 text-[11px] text-zinc-800 transition-colors duration-200 group-hover:bg-white/70 group-hover:text-zinc-900 group-focus-visible:bg-white/70 group-focus-visible:text-zinc-900"
+                    >
                       {t}
                     </Badge>
                   ))}
                 </div>
 
-                <div className="mt-4 text-xs text-zinc-500 dark:text-zinc-400">
+                <div className="relative z-10 mt-4 text-xs text-zinc-700 transition-colors duration-200 group-hover:text-zinc-900 group-focus-visible:text-zinc-900">
                   Click for details
                 </div>
               </Card>

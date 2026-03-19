@@ -20,7 +20,7 @@ export default function RootLayout({
 }>): React.ReactElement {
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
-      <body className="min-h-screen bg-zinc-50 text-zinc-900 antialiased">
+      <body className="page-noise min-h-screen bg-zinc-50 text-zinc-900 antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

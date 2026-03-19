@@ -10,10 +10,9 @@ export default function Page() {
     <main className="flex min-h-screen flex-col">
       <UvaBadge />
       <Hero />
-      <div className="border-t border-[#1C352D]/15 bg-[#F0F7F3]">
+      <div className="border-t border-[#1C352D]/15 bg-[#1D1616]">
         <ProjectsBento />
         <ContactForm />
-        <GithubHeatmap />
         <SocialLinks />
       </div>
     </main>

@@ -84,7 +84,7 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
             <div className="flex items-center gap-2">
               <motion.span
                 aria-hidden="true"
-                className={`relative inline-flex ${compact ? "h-2 w-2" : "h-2.5 w-2.5"} items-center justify-center rounded-full bg-[#1C352D]`}
+                className={`relative inline-flex ${compact ? "h-2 w-2" : "h-2.5 w-2.5"} items-center justify-center rounded-full bg-[#85C79A]`}
                 animate={{ scale: [1, 1.25, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               />

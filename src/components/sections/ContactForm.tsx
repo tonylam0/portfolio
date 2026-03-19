@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { z } from "zod"
 import { toast } from "sonner"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,20 @@ const schema = z.object({
 })
 
 type FormValues = z.infer<typeof schema>
+const quickStartPrompts = [
+  {
+    label: "Project idea",
+    text: "My project idea is ",
+  },
+  {
+    label: "Job opportunity",
+    text: "I'd love to talk to you about an internship or role at my company. My company is ",
+  },
+  {
+    label: "Question",
+    text: "I have a question about ",
+  },
+]
 
 export function ContactForm() {
   const [sending, setSending] = useState(false)
@@ -26,12 +40,18 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", message: "" },
   })
+  const messageValue = useWatch({ control, name: "message" }) || ""
+  const messageLength = messageValue.length
+  const goalLength = 280
+  const progressValue = Math.min((messageLength / goalLength) * 100, 100)
 
   const onSubmit = async (values: FormValues) => {
     setSending(true)
@@ -70,6 +90,27 @@ export function ContactForm() {
             <p className="text-sm text-zinc-600 dark:text-zinc-300">
               Send a message and I’ll respond as soon as I can.
             </p>
+          </div>
+
+          <div className="mt-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+              Quick start
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {quickStartPrompts.map((prompt) => (
+                <Button
+                  key={prompt.label}
+                  type="button"
+                  variant="outline"
+                  className="h-8 cursor-pointer text-xs"
+                  onClick={() => {
+                    setValue("message", prompt.text, { shouldDirty: true, shouldTouch: true })
+                  }}
+                >
+                  {prompt.label}
+                </Button>
+              ))}
+            </div>
           </div>
 
           <form
@@ -123,6 +164,19 @@ export function ContactForm() {
                 className="min-h-28"
                 {...register("message")}
               />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                  <span>{messageLength < goalLength ? "Tip: 2-4 sentences gives me context fast." : "Great detail level."}</span>
+                  <span>{messageLength}/{goalLength}</span>
+                </div>
+                <div className="h-1.5 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+                  <motion.div
+                    className="h-full rounded-full bg-[#1C352D]"
+                    animate={{ width: `${progressValue}%` }}
+                    transition={{ type: "spring", stiffness: 180, damping: 22 }}
+                  />
+                </div>
+              </div>
               {errors.message ? (
                 <p className="text-sm text-red-600 dark:text-red-400">
                   {errors.message.message}
