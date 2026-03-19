@@ -54,14 +54,14 @@ export function LearningStatus() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_0%_0%,rgba(16,185,129,0.14),transparent_45%),radial-gradient(circle_at_100%_0%,rgba(59,130,246,0.14),transparent_45%)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_0%_0%,rgba(28,53,45,0.18),transparent_45%),radial-gradient(circle_at_100%_0%,rgba(28,53,45,0.10),transparent_45%)]"
           />
 
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="flex items-center gap-2">
               <motion.span
                 aria-hidden="true"
-                className="relative inline-flex h-2.5 w-2.5 items-center justify-center rounded-full bg-emerald-500"
+                className="relative inline-flex h-2.5 w-2.5 items-center justify-center rounded-full bg-[#1C352D]"
                 animate={{ scale: [1, 1.25, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               />
