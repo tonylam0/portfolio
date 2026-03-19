@@ -55,6 +55,9 @@ export function ContactForm() {
 
   const onSubmit = async (values: FormValues) => {
     setSending(true)
+    // #region agent log
+    fetch("http://127.0.0.1:7629/ingest/7f1887d1-8eb8-473e-a00c-5cbe963c058b",{method:"POST",headers:{"Content-Type":"application/json","X-Debug-Session-Id":"a13546"},body:JSON.stringify({sessionId:"a13546",runId:"initial",hypothesisId:"H1",location:"ContactForm.tsx:onSubmit:start",message:"Submitting contact form",data:{hasName:Boolean(values.name),hasEmail:Boolean(values.email),messageLength:values.message?.length ?? 0},timestamp:Date.now()})}).catch(()=>{})
+    // #endregion
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -63,6 +66,9 @@ export function ContactForm() {
       })
 
       const data: unknown = await res.json().catch(() => null)
+      // #region agent log
+      fetch("http://127.0.0.1:7629/ingest/7f1887d1-8eb8-473e-a00c-5cbe963c058b",{method:"POST",headers:{"Content-Type":"application/json","X-Debug-Session-Id":"a13546"},body:JSON.stringify({sessionId:"a13546",runId:"initial",hypothesisId:"H1",location:"ContactForm.tsx:onSubmit:response",message:"Received contact API response",data:{status:res.status,resOk:res.ok,apiOk:Boolean((data as { ok?: unknown } | null)?.ok),apiError:(data as { error?: string } | null)?.error ?? null},timestamp:Date.now()})}).catch(()=>{})
+      // #endregion
       const ok = Boolean((data as { ok?: unknown } | null)?.ok)
       if (!res.ok || !ok) {
         const error =
@@ -75,6 +81,9 @@ export function ContactForm() {
       reset()
     } catch (e) {
       const message = e instanceof Error ? e.message : "Could not send message."
+      // #region agent log
+      fetch("http://127.0.0.1:7629/ingest/7f1887d1-8eb8-473e-a00c-5cbe963c058b",{method:"POST",headers:{"Content-Type":"application/json","X-Debug-Session-Id":"a13546"},body:JSON.stringify({sessionId:"a13546",runId:"initial",hypothesisId:"H5",location:"ContactForm.tsx:onSubmit:catch",message:"Contact form submit failed",data:{errorMessage:message},timestamp:Date.now()})}).catch(()=>{})
+      // #endregion
       toast.error(message)
     } finally {
       setSending(false)
