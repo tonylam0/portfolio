@@ -19,7 +19,7 @@ export function UvaBadge() {
       >
         <Badge
           variant="outline"
-          className="relative overflow-hidden border-white/20 bg-[#B4D3D9] px-3 py-1 text-[10px] text-black font-medium tracking-wide backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-900/40"
+          className="relative overflow-hidden border-white/20 bg-[#A0D585] px-3 py-1 text-[10px] text-black font-medium tracking-wide backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-900/40"
         >
           <span className="relative z-10">
             CHARLOTTESVILLE | UVA CS &apos;29

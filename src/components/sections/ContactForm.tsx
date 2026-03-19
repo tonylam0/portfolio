@@ -192,7 +192,7 @@ export function ContactForm() {
               <Button
                 type="submit"
                 disabled={sending}
-                className="gap-2"
+                className="gap-2 rounded-md bg-black cursor-pointer hover:bg-[#212121]"
               >
                 {sending ? (
                   <motion.span

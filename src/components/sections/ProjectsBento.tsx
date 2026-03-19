@@ -221,7 +221,7 @@ export function ProjectsBento() {
               }}
             >
               <Card className="relative h-full overflow-hidden bg-[#A0D585] p-5 text-zinc-800 ring-1 ring-foreground/10">
-                <div className="absolute inset-0 z-0 origin-top scale-y-0 bg-white transition-transform duration-300 ease-out group-hover:scale-y-100 group-focus-visible:scale-y-100" />
+                <div className="absolute inset-0 z-0 origin-top scale-y-0 bg-[#EEFABD] transition-transform duration-300 ease-out group-hover:scale-y-100 group-focus-visible:scale-y-100" />
 
                 <div className="relative z-10 flex items-start justify-between gap-4">
                   <div className="min-w-0">
