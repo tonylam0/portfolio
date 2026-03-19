@@ -139,7 +139,8 @@ export function ProjectsBento() {
   }, [hoveredProjectId])
 
   const previewSrc = useMemo(() => {
-    return hoveredProject ? projectPreviewSrc(hoveredProject) : ""
+    if (!hoveredProject) return ""
+    return hoveredProject.previewImage || projectPreviewSrc(hoveredProject)
   }, [hoveredProject])
 
   const onTagChange = (nextTag: string) => {
@@ -206,9 +207,8 @@ export function ProjectsBento() {
               }}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.99 }}
-              className={`group cursor-pointer text-left focus-visible:outline-none ${p.gridClassName} ${
-                hoveredProjectId === p.id ? "dark" : ""
-              }`}
+              className={`group cursor-pointer text-left focus-visible:outline-none ${p.gridClassName} ${hoveredProjectId === p.id ? "dark" : ""
+                }`}
               onMouseEnter={() => setHoveredProjectId(p.id)}
               onMouseLeave={() => setHoveredProjectId((id) => (id === p.id ? null : id))}
               onMouseMove={(e) => {
@@ -220,7 +220,7 @@ export function ProjectsBento() {
                 setOpen(true)
               }}
             >
-              <Card className="relative h-full overflow-hidden bg-[#A0D585] p-5 text-zinc-800 ring-1 ring-foreground/10">
+              <Card className="relative flex flex-col h-full overflow-hidden bg-[#A0D585] p-5 text-zinc-800 ring-1 ring-foreground/10">
                 <div className="absolute inset-0 z-0 origin-top scale-y-0 bg-[#EEFABD] transition-transform duration-300 ease-out group-hover:scale-y-100 group-focus-visible:scale-y-100" />
 
                 <div className="relative z-10 flex items-start justify-between gap-4">
@@ -239,14 +239,14 @@ export function ProjectsBento() {
                     <Badge
                       key={t}
                       variant="secondary"
-                      className="h-5 border border-zinc-900/10 bg-white/55 px-2 text-[11px] text-zinc-800 transition-colors duration-200 group-hover:bg-white/70 group-hover:text-zinc-900 group-focus-visible:bg-white/70 group-focus-visible:text-zinc-900"
+                      className="h-5 border border-black bg-white px-2 text-[11px] text-zinc-800 transition-colors duration-200 group-hover:bg-white/70 group-hover:text-zinc-900 group-focus-visible:bg-white/70 group-focus-visible:text-zinc-900"
                     >
                       {t}
                     </Badge>
                   ))}
                 </div>
 
-                <div className="relative z-10 mt-4 text-xs text-zinc-700 transition-colors duration-200 group-hover:text-zinc-900 group-focus-visible:text-zinc-900">
+                <div className="relative z-10 mt-auto pt-4 text-xs text-zinc-700 transition-colors duration-200 group-hover:text-zinc-900 group-focus-visible:text-zinc-900">
                   Click for details
                 </div>
               </Card>
@@ -275,7 +275,7 @@ export function ProjectsBento() {
               <img
                 src={previewSrc}
                 alt=""
-                className="h-[86px] w-[136px] rounded-xl border border-white/15 bg-black/20 object-cover shadow-lg"
+                className="h-[129px] w-[204px] rounded-xl border border-white/15 bg-black/20 object-cover shadow-lg"
               />
             </motion.div>
           ) : null}

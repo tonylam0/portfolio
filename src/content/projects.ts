@@ -5,11 +5,11 @@ export type Project = {
   title: string
   description: string
   tags: string[]
-  // Bento grid placement
   gridClassName: string
   problem: string
   stack: string[]
   highlights: string[]
+  previewImage?: string
   links?: ProjectLink[]
 }
 
@@ -17,7 +17,7 @@ export const projects: Project[] = [
   {
     id: "evergreen",
     title: "Evergreen",
-    description: "A full-stack web platform for sharing and discussing video essays.",
+    description: "A full-stack web platform for sharing and reviewing video essays.",
     tags: ["Creative", "Web"],
     gridClassName: "col-span-7 row-span-2",
     problem: "Build a robust, decoupled architecture to handle user authentication, relational data, and media.",
@@ -27,7 +27,7 @@ export const projects: Project[] = [
       "Built a responsive frontend utilizing component-based state management",
       "Designed a relational database schema for profiles, media, and comment threads",
     ],
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+    previewImage: "/projects/evergreen.png"
   },
   {
     id: "digits-recognition",
@@ -42,6 +42,7 @@ export const projects: Project[] = [
       "Processed and trained the model on the MNIST dataset",
       "Achieved over 95% accuracy in handwritten digit classification",
     ],
+    previewImage: "/projects/digits.png",
     links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
   },
   {
@@ -57,6 +58,7 @@ export const projects: Project[] = [
       "Designed modular, Object-Oriented Planet and Moon classes",
       "Built an interactive UX with dynamic zooming and camera tracking",
     ],
+    previewImage: "/projects/planet-sim.png",
     links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
   },
   {
@@ -72,6 +74,7 @@ export const projects: Project[] = [
       "Engineered real-time data visualization using Matplotlib",
       "Tracked and graphed population stability across generations",
     ],
+    previewImage: "/projects/gol.png",
     links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
   },
   {
@@ -87,8 +90,25 @@ export const projects: Project[] = [
       "Engineered dynamic layout animations and micro-interactions",
       "Optimized for high performance and accessibility standards",
     ],
+    previewImage: "/projects/personal.png",
     links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
   },
+  {
+    id: "mandelbrot-generator",
+    title: "Mandelbrot Set Generator",
+    description: "An interactive fractal explorer with real-time color mapping and formula tweaks.",
+    tags: ["Math", "Simulation", "Creative"],
+    gridClassName: "col-span-12 row-span-2",
+    problem: "Render high-resolution fractals interactively while allowing dynamic changes to complex mathematical bounds.",
+    stack: ["Python", "NumPy", "Pygame"],
+    highlights: [
+      "Engineered real-time rendering using color-mapped iteration counts for visual depth",
+      "Built support for dynamic recursive formulas, handling non-integer and negative exponents",
+      "Optimized pixel-heavy mathematical calculations using NumPy for smooth performance",
+    ],
+    previewImage: "/projects/mandelbrot.png",
+    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+  }
 ]
 
 export const projectTags = [
