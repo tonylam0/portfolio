@@ -155,7 +155,7 @@ export function ProjectsBento() {
   }
 
   return (
-    <section id="yes" aria-label="Projects" className="py-16 text-white">
+    <section id="projects" aria-label="Projects" className="py-16 text-white">
       <div className="mx-auto w-full max-w-5xl px-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
