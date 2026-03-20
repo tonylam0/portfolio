@@ -1,7 +1,7 @@
 "use client"
 
 import { ElementType, useMemo, useState } from "react"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import { learningItems } from "@/content/learning"
 import { Badge } from "@/components/ui/badge"
@@ -32,7 +32,6 @@ export type LearningStatusProps = {
 }
 
 export function LearningStatus({ compact = false, showSection = true }: LearningStatusProps) {
-  const reducedMotion = useReducedMotion()
   const items = learningItems
 
   const [index, setIndex] = useState(0)

@@ -27,7 +27,7 @@ export const learningItems: LearningItem[] = [
       "Running 2 times a week",
       "Integrating both light and hard runs"
     ],
-    updatedAtISO: "2026-03-17T23:45:00.000Z",
+    updatedAtISO: "2026-03-19T23:45:00.000Z",
   },
   {
     id: "dsa-patterns",
@@ -37,6 +37,6 @@ export const learningItems: LearningItem[] = [
       "Mastering graph traversal algorithms and greedy programming patterns",
       "Analyzing Big O complexity to improve runtime performance in full-stack apps",
     ],
-    updatedAtISO: "2026-03-19T00:01:00.000Z",
+    updatedAtISO: "2026-03-20T00:01:00.000Z",
   }
 ]
