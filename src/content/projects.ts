@@ -21,7 +21,7 @@ export const projects: Project[] = [
     tags: ["Creative", "Web"],
     gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
     problem: 'Engineering a "non-brainrotting" discovery engine that surfaces timeless content through human curation and an age-boosted algorithm.',
-    stack: ["React", "Django", "Vite", "SQLite"],
+    stack: ["React", "Django", "Python", "SQLite", "CSS"],
     highlights: [
       "Architected a decoupled Django/React platform.",
       "Designed a relational database schema for profiles, media, and comment threads",
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     tags: ["AI", "Math"],
     gridClassName: "col-span-1 md:col-span-5 md:row-span-2",
     problem: "Understand the underlying mathematics of machine learning by implementing core algorithms manually.",
-    stack: ["Python", "NumPy", "Linear Algebra"],
+    stack: ["Python", "NumPy"],
     highlights: [
       "Engineered feedforward, backpropagation, and gradient descent algorithms",
       "Processed and trained the model on the MNIST dataset",
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     tags: ["Simulation", "Math"],
     gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
     problem: "Accurately model complex gravitational attraction and orbital physics in real-time.",
-    stack: ["Python", "Pygame", "OOP"],
+    stack: ["Python", "Pygame"],
     highlights: [
       "Calculated real-time orbital mechanics and gravitational forces",
       "Designed modular, Object-Oriented Planet and Moon classes",
@@ -85,7 +85,7 @@ export const projects: Project[] = [
     tags: ["Creative", "Web"],
     gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
     problem: "Create an minimalistic website that showcases my life and thoughts.",
-    stack: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    stack: ["React", "CSS"],
     highlights: [
       "Implemented a responsive, interactive Bento grid layout",
       "Engineered dynamic layout animations and micro-interactions",
