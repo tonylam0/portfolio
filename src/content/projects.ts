@@ -20,12 +20,13 @@ export const projects: Project[] = [
     description: "A full-stack web platform for sharing and reviewing video essays.",
     tags: ["Creative", "Web"],
     gridClassName: "col-span-7 row-span-2",
-    problem: "Build a robust, decoupled architecture to handle user authentication, relational data, and media.",
+    problem: 'Engineering a "non-brainrotting" discovery engine that surfaces timeless content through human curation and an age-boosted algorithm.',
     stack: ["React", "Django", "Vite", "SQLite"],
     highlights: [
-      "Architected a Django backend with RESTful APIs for auth and content management",
-      "Built a responsive frontend utilizing component-based state management",
+      "Architected a decoupled Django/React platform.",
       "Designed a relational database schema for profiles, media, and comment threads",
+      'Developed an "age-boosted" discovery algorithm that prioritizes enduring viewer engagement over temporary trends.',
+      "Integrated YouTube embedding and OAuth authentication to support human-curated feeds.",
     ],
     previewImage: "/projects/evergreen.png"
   },
@@ -83,7 +84,7 @@ export const projects: Project[] = [
     description: "My personal website to share my thoughts and workflow.",
     tags: ["Creative", "Web"],
     gridClassName: "col-span-4 row-span-2",
-    problem: "Create an engaging, performant web presence with modern UI/UX patterns.",
+    problem: "Create an minimalistic website that showcases my life and thoughts.",
     stack: ["Next.js", "Tailwind CSS", "Framer Motion"],
     highlights: [
       "Implemented a responsive, interactive Bento grid layout",
