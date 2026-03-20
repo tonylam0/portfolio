@@ -10,35 +10,33 @@ export type LearningItem = {
 export const learningItems: LearningItem[] = [
   {
     id: "react-perf",
-    title: "Learning AWS",
-    summary: "Currently studying to pass my AWS Certified Cloud Practitioner Exam",
+    title: "Amazon Web Services (AWS)",
+    summary: "Currently studying to pass my AWS Certified Cloud Practitioner Exam.",
     details: [
       "Studying through a 14 hour YouTube course",
       "Taking as many practice tests I can",
       "Taking the exam on March 20th, 2026",
     ],
-    updatedAtISO: "2026-03-20T20:00:00.000Z",
+    updatedAtISO: "2026-03-19T20:00:00.000Z",
   },
   {
-    id: "next-security",
-    title: "Next.js security basics",
-    summary: "Hardening client/server boundaries and validating inputs end-to-end.",
+    id: "running",
+    title: "Relearning how to run",
+    summary: "Getting back into running after hiatus.",
     details: [
-      "Validate payloads with Zod in API routes",
-      "Avoid leaking secrets into client components",
-      "Handle errors consistently for UX and logs",
+      "Running 2 times a week",
+      "Integrating both light and hard runs"
     ],
-    updatedAtISO: "2026-03-18T18:30:00.000Z",
+    updatedAtISO: "2026-03-17T23:45:00.000Z",
   },
   {
-    id: "ux-motion",
-    title: "UX motion that teaches",
-    summary: "Using subtle animation to guide attention instead of distracting.",
+    id: "dsa-patterns",
+    title: "Advanced Data Structures & Algorithms",
+    summary: "Deepening my understanding of algorithm efficiency and complex data models.",
     details: [
-      "Use small staggered reveals for hierarchy",
-      "Prefer spring/easing tuned to content density",
-      "Ensure motion respects reduced-motion preferences",
+      "Mastering graph traversal algorithms and greedy programming patterns",
+      "Analyzing Big O complexity to improve runtime performance in full-stack apps",
     ],
-    updatedAtISO: "2026-03-17T12:15:00.000Z",
-  },
+    updatedAtISO: "2026-03-19T00:01:00.000Z",
+  }
 ]

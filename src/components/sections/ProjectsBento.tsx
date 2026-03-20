@@ -275,7 +275,7 @@ export function ProjectsBento() {
               <img
                 src={previewSrc}
                 alt=""
-                className="h-[129px] w-[204px] rounded-xl border border-white/15 bg-black/20 object-cover shadow-lg"
+                className="h-[150px] w-[230px] rounded-xl border border-white/15 bg-black/20 object-cover shadow-lg"
               />
             </motion.div>
           ) : null}

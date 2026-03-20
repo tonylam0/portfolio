@@ -43,7 +43,7 @@ export const projects: Project[] = [
       "Achieved over 95% accuracy in handwritten digit classification",
     ],
     previewImage: "/projects/digits.png",
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+    links: [{ label: "GitHub", href: "https://github.com/tonylam0/Handwritten-Digits-Recognition" }],
   },
   {
     id: "planet-sim",
@@ -59,7 +59,7 @@ export const projects: Project[] = [
       "Built an interactive UX with dynamic zooming and camera tracking",
     ],
     previewImage: "/projects/planet-sim.png",
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+    links: [{ label: "GitHub", href: "https://github.com/tonylam0/Planetary-Simulation" }],
   },
   {
     id: "conways-gol",
@@ -75,7 +75,7 @@ export const projects: Project[] = [
       "Tracked and graphed population stability across generations",
     ],
     previewImage: "/projects/gol.png",
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+    links: [{ label: "GitHub", href: "https://github.com/tonylam0/Conways-Game-of-Life" }],
   },
   {
     id: "personal-website",
@@ -91,13 +91,13 @@ export const projects: Project[] = [
       "Optimized for high performance and accessibility standards",
     ],
     previewImage: "/projects/personal.png",
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+    links: [{ label: "My website", href: "https://tonylam0.github.io/" }],
   },
   {
     id: "mandelbrot-generator",
     title: "Mandelbrot Set Generator",
     description: "An interactive fractal explorer with real-time color mapping and formula tweaks.",
-    tags: ["Math", "Simulation", "Creative"],
+    tags: ["Math", "Simulation"],
     gridClassName: "col-span-12 row-span-2",
     problem: "Render high-resolution fractals interactively while allowing dynamic changes to complex mathematical bounds.",
     stack: ["Python", "NumPy", "Pygame"],
@@ -107,7 +107,7 @@ export const projects: Project[] = [
       "Optimized pixel-heavy mathematical calculations using NumPy for smooth performance",
     ],
     previewImage: "/projects/mandelbrot.png",
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0" }],
+    links: [{ label: "GitHub", href: "https://github.com/tonylam0/Mandelbrot-Set-Generator" }],
   }
 ]
 
