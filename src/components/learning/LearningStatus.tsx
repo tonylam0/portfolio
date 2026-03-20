@@ -1,6 +1,6 @@
 "use client"
 
-import { ElementType, useEffect, useMemo, useState } from "react"
+import { ElementType, useMemo, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 
 import { learningItems } from "@/content/learning"
@@ -37,24 +37,12 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
 
   const [index, setIndex] = useState(0)
   const [showDetails, setShowDetails] = useState(false)
-  const [paused, setPaused] = useState(false)
 
   const current = items[index]
 
   const lastUpdated = useMemo(() => {
     return formatUpdatedAt(current.updatedAtISO)
   }, [current.updatedAtISO])
-
-  // Auto-rotate "live" status; pause on hover for a calm UX.
-  useEffect(() => {
-    if (reducedMotion || paused) return
-
-    const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % items.length)
-    }, 8000)
-
-    return () => window.clearInterval(id)
-  }, [items.length, paused, reducedMotion])
 
   const wrapClassName = compact ? "px-0" : "px-6"
   const cardPadding = compact ? "p-4" : "p-6"
@@ -71,8 +59,6 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
     >
       <div className={`mx-auto w-full max-w-5xl ${wrapClassName}`}>
         <Card
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
           className={`relative overflow-hidden ${cardPadding}`}
         >
           <div
@@ -91,7 +77,7 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
               <Badge variant="secondary">What I'm learning right now</Badge>
             </div>
 
-            <div className="text-right text-xs text-zinc-600 dark:text-zinc-300">
+            <div className="hidden sm:block text-right text-xs text-zinc-600 dark:text-zinc-300">
               <div className="font-medium">Last updated</div>
               <div>{lastUpdated}</div>
             </div>
@@ -184,10 +170,6 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
             >
               {showDetails ? "Hide details" : "Show details"}
             </Button>
-
-            <div className="ml-auto self-center text-xs text-zinc-500 dark:text-zinc-400">
-              {paused ? "Paused" : reducedMotion ? "Reduced motion" : "Auto-rotating"}
-            </div>
           </div>
         </Card>
       </div>
