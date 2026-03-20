@@ -16,8 +16,9 @@ export const learningItems: LearningItem[] = [
       "Studying through a 14 hour YouTube course",
       "Taking as many practice tests I can",
       "Taking the exam on March 20th, 2026",
+      "I passed!",
     ],
-    updatedAtISO: "2026-03-19T20:00:00.000Z",
+    updatedAtISO: "2026-03-20T21:34:00.000Z",
   },
   {
     id: "running",
@@ -30,13 +31,13 @@ export const learningItems: LearningItem[] = [
     updatedAtISO: "2026-03-19T23:45:00.000Z",
   },
   {
-    id: "dsa-patterns",
-    title: "Advanced Data Structures & Algorithms",
-    summary: "Deepening my understanding of algorithm efficiency and complex data models.",
+    id: "slam",
+    title: "SLAM & Swift",
+    summary: "Preparing for HooHacks 26' by learning SLAM (Simultaneous Localization and Mapping) & Swift",
     details: [
-      "Mastering graph traversal algorithms and greedy programming patterns",
-      "Analyzing Big O complexity to improve runtime performance in full-stack apps",
+      "Creating the inner logic and architecture of our SLAM-related project",
+      "Learning Swift in order to code the mobile app that houses our project",
     ],
-    updatedAtISO: "2026-03-20T00:01:00.000Z",
+    updatedAtISO: "2026-03-20T21:37:00.000Z",
   }
 ]
