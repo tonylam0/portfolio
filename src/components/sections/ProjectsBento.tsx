@@ -336,4 +336,3 @@ export function ProjectsBento() {
     </section>
   )
 }
-
