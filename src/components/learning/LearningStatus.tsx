@@ -69,11 +69,11 @@ export function LearningStatus({ compact = false, showSection = true }: Learning
             <div className="flex items-center gap-2">
               <motion.span
                 aria-hidden="true"
-                className={`relative inline-flex ${compact ? "h-2 w-2" : "h-2.5 w-2.5"} items-center justify-center rounded-full bg-[#85C79A]`}
+                className={`relative inline-flex ${compact ? "h-2 w-2" : "h-2.5 w-2.5"} items-center justify-center rounded-full bg-[#A0D585]`}
                 animate={{ scale: [1, 1.25, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               />
-              <Badge variant="secondary">What I'm learning right now</Badge>
+              <Badge variant="secondary">Live learning</Badge>
             </div>
 
             <div className="hidden sm:block text-right text-xs text-zinc-600 dark:text-zinc-300">
