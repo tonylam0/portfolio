@@ -9,8 +9,8 @@ import { CursorCircle } from "@/components/CursorCircle";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Minimalist developer portfolio.",
+  title: "Tony | Portfolio",
+  description: "Tony's portfolio",
 };
 
 export default function RootLayout({
