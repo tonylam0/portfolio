@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { AnimatePresence, motion, useMotionValue } from "framer-motion"
 import { ExternalLinkIcon } from "lucide-react"
 
@@ -119,9 +119,30 @@ export function ProjectsBento() {
   const [open, setOpen] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
   const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null)
+  const [canHoverPreview, setCanHoverPreview] = useState(false)
 
   const cursorX = useMotionValue(0)
   const cursorY = useMotionValue(0)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)")
+    const updateHoverCapability = () => {
+      setCanHoverPreview(mediaQuery.matches)
+    }
+
+    updateHoverCapability()
+    mediaQuery.addEventListener("change", updateHoverCapability)
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateHoverCapability)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!canHoverPreview) {
+      setHoveredProjectId(null)
+    }
+  }, [canHoverPreview])
 
   const filteredProjects = useMemo(() => {
     if (tag === "All") return projects
@@ -134,9 +155,9 @@ export function ProjectsBento() {
   }, [activeId])
 
   const hoveredProject = useMemo(() => {
-    if (!hoveredProjectId) return null
+    if (!canHoverPreview || !hoveredProjectId) return null
     return projects.find((p) => p.id === hoveredProjectId) ?? null
-  }, [hoveredProjectId])
+  }, [canHoverPreview, hoveredProjectId])
 
   const previewSrc = useMemo(() => {
     if (!hoveredProject) return ""
@@ -190,7 +211,7 @@ export function ProjectsBento() {
           </Tabs>
         </div>
 
-        <div className="mt-7 grid grid-cols-12 gap-4">
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-12">
           {filteredProjects.map((p, i) => (
             <motion.button
               key={p.id}
@@ -205,15 +226,23 @@ export function ProjectsBento() {
                 damping: 18,
                 mass: 0.7,
               }}
-              whileHover={{ y: -2 }}
+              whileHover={canHoverPreview ? { y: -2 } : undefined}
               whileTap={{ scale: 0.99 }}
               className={`group cursor-pointer text-left focus-visible:outline-none ${p.gridClassName} ${hoveredProjectId === p.id ? "dark" : ""
                 }`}
-              onMouseEnter={() => setHoveredProjectId(p.id)}
-              onMouseLeave={() => setHoveredProjectId((id) => (id === p.id ? null : id))}
+              onMouseEnter={() => {
+                if (canHoverPreview) setHoveredProjectId(p.id)
+              }}
+              onMouseLeave={() => {
+                if (canHoverPreview) {
+                  setHoveredProjectId((id) => (id === p.id ? null : id))
+                }
+              }}
               onMouseMove={(e) => {
-                cursorX.set(e.clientX)
-                cursorY.set(e.clientY)
+                if (canHoverPreview) {
+                  cursorX.set(e.clientX)
+                  cursorY.set(e.clientY)
+                }
               }}
               onClick={() => {
                 setActiveId(p.id)
@@ -256,7 +285,7 @@ export function ProjectsBento() {
 
         {/* Hover preview that appears next to your cursor */}
         <AnimatePresence>
-          {hoveredProject && previewSrc ? (
+          {canHoverPreview && hoveredProject && previewSrc ? (
             <motion.div
               aria-hidden="true"
               className="pointer-events-none fixed z-[60]"

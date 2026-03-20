@@ -19,7 +19,7 @@ export const projects: Project[] = [
     title: "Evergreen",
     description: "A full-stack web platform for sharing and reviewing video essays.",
     tags: ["Creative", "Web"],
-    gridClassName: "col-span-7 row-span-2",
+    gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
     problem: 'Engineering a "non-brainrotting" discovery engine that surfaces timeless content through human curation and an age-boosted algorithm.',
     stack: ["React", "Django", "Vite", "SQLite"],
     highlights: [
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     title: "Digits Recognition",
     description: "A neural network built entirely from scratch without external ML frameworks.",
     tags: ["AI", "Math"],
-    gridClassName: "col-span-5 row-span-2",
+    gridClassName: "col-span-1 md:col-span-5 md:row-span-2",
     problem: "Understand the underlying mathematics of machine learning by implementing core algorithms manually.",
     stack: ["Python", "NumPy", "Linear Algebra"],
     highlights: [
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     title: "Planetary Simulation",
     description: "A physics-based simulation of the inner solar system and orbital mechanics.",
     tags: ["Simulation", "Math"],
-    gridClassName: "col-span-4 row-span-2",
+    gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
     problem: "Accurately model complex gravitational attraction and orbital physics in real-time.",
     stack: ["Python", "Pygame", "OOP"],
     highlights: [
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     title: "Conway's Game of Life",
     description: "An interactive cellular automaton with real-time population tracking.",
     tags: ["Simulation", "Math"],
-    gridClassName: "col-span-4 row-span-2",
+    gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
     problem: "Visualize generation stability and state changes mathematically over time.",
     stack: ["Python", "Pygame", "Matplotlib"],
     highlights: [
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     title: "Personal website",
     description: "My personal website to share my thoughts and workflow.",
     tags: ["Creative", "Web"],
-    gridClassName: "col-span-4 row-span-2",
+    gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
     problem: "Create an minimalistic website that showcases my life and thoughts.",
     stack: ["Next.js", "Tailwind CSS", "Framer Motion"],
     highlights: [
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     title: "Mandelbrot Set Generator",
     description: "An interactive fractal explorer with real-time color mapping and formula tweaks.",
     tags: ["Math", "Simulation"],
-    gridClassName: "col-span-12 row-span-2",
+    gridClassName: "col-span-1 md:col-span-12 md:row-span-2",
     problem: "Render high-resolution fractals interactively while allowing dynamic changes to complex mathematical bounds.",
     stack: ["Python", "NumPy", "Pygame"],
     highlights: [
