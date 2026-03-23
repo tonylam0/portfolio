@@ -15,20 +15,25 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "evergreen",
-    title: "Evergreen",
-    description: "A full-stack web platform for sharing and reviewing video essays.",
-    tags: ["Creative", "Web"],
+    id: "wallhax",
+    title: "WallHax",
+    description: "An award-winning multi-device AR platform with post-mission 3D environmental rendering for shared situational awareness.",
+    tags: ["AI", "Web", "Creative"],
     gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
-    problem: 'Engineering a "non-brainrotting" discovery engine that surfaces timeless content through human curation and an age-boosted algorithm.',
-    stack: ["Vite + React", "Django", "Python", "SQLite", "CSS"],
+    problem: "Teams in hazardous environments (SAR, military) operate blind indoors. We needed to sync live spatial data across devices and generate photorealistic post-mission 3D digital environments.",
+    stack: ["Swift (ARKit)", "Python", "React", "Three.js", "Luma AI"],
     highlights: [
-      "Architected a decoupled Django/React platform.",
-      "Designed a relational database schema for profiles, media, and comment threads",
-      'Developed an "age-boosted" discovery algorithm that prioritizes enduring viewer engagement over temporary trends.',
-      "Integrated YouTube embedding and OAuth authentication to support human-curated feeds.",
+      "Won the Best AI & Data Science Track at 2026 HooHacks Hackathon.",
+      "Engineered a heuristics engine to translate live ARKit SLAM/IMU data into 3D character animations over a low-latency UDP relay.",
+      "Leveraged Luma AI's machine learning pipeline to process capture data into highly detailed 3D Gaussian Splats.",
+      "Architected a React/WebGL web server to render the photorealistic digital world with a frame-by-frame timeline for post-mission tactical review."
     ],
-    previewImage: "/projects/evergreen.png"
+    previewImage: "/projects/wallhax.jpeg",
+    links: [
+      { label: "Demo", href: "https://youtu.be/II26dfXLtV0?si=kI4TycO0T1HWsRAU" },
+      { label: "GitHub", href: "https://github.com/HyunLee8/wallhax" },
+      { label: "Devpost", href: "https://devpost.com/software/wallhax-896ck3" }
+    ]
   },
   {
     id: "digits-recognition",
@@ -46,12 +51,13 @@ export const projects: Project[] = [
     previewImage: "/projects/digits.png",
     links: [{ label: "GitHub", href: "https://github.com/tonylam0/Handwritten-Digits-Recognition" }],
   },
+
   {
     id: "planet-sim",
     title: "Planetary Simulation",
     description: "A physics-based simulation of the inner solar system and orbital mechanics.",
     tags: ["Simulation", "Math"],
-    gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
+    gridClassName: "col-span-1 md:col-span-5 md:row-span-2",
     problem: "Accurately model complex gravitational attraction and orbital physics in real-time.",
     stack: ["Python", "Pygame"],
     highlights: [
@@ -63,20 +69,20 @@ export const projects: Project[] = [
     links: [{ label: "GitHub", href: "https://github.com/tonylam0/Planetary-Simulation" }],
   },
   {
-    id: "conways-gol",
-    title: "Conway's Game of Life",
-    description: "An interactive cellular automaton with real-time population tracking.",
-    tags: ["Simulation", "Math"],
-    gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
-    problem: "Visualize generation stability and state changes mathematically over time.",
-    stack: ["Python", "Pygame", "Matplotlib"],
+    id: "evergreen",
+    title: "Evergreen",
+    description: "A full-stack web platform for sharing and reviewing video essays.",
+    tags: ["Creative", "Web"],
+    gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
+    problem: 'Engineering a "non-brainrotting" discovery engine that surfaces timeless content through human curation and an age-boosted algorithm.',
+    stack: ["Vite + React", "Django", "Python", "SQLite", "CSS"],
     highlights: [
-      "Built interactive simulation controls (pause, reset, speed adjustment)",
-      "Engineered real-time data visualization using Matplotlib",
-      "Tracked and graphed population stability across generations",
+      "Architected a decoupled Django/React platform.",
+      "Designed a relational database schema for profiles, media, and comment threads",
+      'Developed an "age-boosted" discovery algorithm that prioritizes enduring viewer engagement over temporary trends.',
+      "Integrated YouTube embedding and OAuth authentication to support human-curated feeds.",
     ],
-    previewImage: "/projects/gol.png",
-    links: [{ label: "GitHub", href: "https://github.com/tonylam0/Conways-Game-of-Life" }],
+    previewImage: "/projects/evergreen.png"
   },
   {
     id: "personal-website",
@@ -99,7 +105,7 @@ export const projects: Project[] = [
     title: "Mandelbrot Set Generator",
     description: "An interactive fractal explorer with real-time color mapping and formula tweaks.",
     tags: ["Math", "Simulation"],
-    gridClassName: "col-span-1 md:col-span-12 md:row-span-2",
+    gridClassName: "col-span-1 md:col-span-8 md:row-span-2",
     problem: "Render high-resolution fractals interactively while allowing dynamic changes to complex mathematical bounds.",
     stack: ["Python", "NumPy", "Pygame"],
     highlights: [
