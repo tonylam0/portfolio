@@ -21,7 +21,7 @@ export const projects: Project[] = [
     tags: ["AI", "Web", "Creative"],
     gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
     problem: "Teams in hazardous environments (SAR, military) operate blind indoors. We needed to sync live spatial data across devices and generate photorealistic post-mission 3D digital environments.",
-    stack: ["Swift (ARKit)", "Python", "React", "Three.js", "Luma AI"],
+    stack: ["Swift (ARKit)", "Python", "React", "Three.js", "Luma AI", "Matplotlib"],
     highlights: [
       "Won the Best AI & Data Science Track at 2026 HooHacks Hackathon.",
       "Engineered a heuristics engine to translate live ARKit SLAM/IMU data into 3D character animations over a low-latency UDP relay.",
