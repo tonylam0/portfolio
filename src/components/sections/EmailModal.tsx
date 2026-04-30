@@ -93,12 +93,12 @@ export function EmailModal({ open, onClose }: Props) {
           <motion.div
             role="dialog"
             aria-label="Send email"
-            className="relative w-full max-w-[420px] overflow-hidden rounded-[14px] border border-[rgba(30,26,22,0.10)] shadow-[0_24px_60px_-20px_rgba(30,26,22,0.35)]"
+            className="relative w-full max-w-[420px] overflow-hidden rounded-[14px] border shadow-[0_24px_60px_-20px_rgba(30,26,22,0.28)]"
             style={{
-              background:
-                "radial-gradient(ellipse 90% 70% at 20% 0%, rgba(196,127,168,0.35) 0%, transparent 60%)," +
-                "radial-gradient(ellipse 90% 70% at 100% 100%, rgba(172,207,163,0.40) 0%, transparent 60%)," +
-                "rgba(240,235,227,0.92)",
+              background: "rgba(240,235,227,0.42)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              WebkitBackdropFilter: "blur(20px) saturate(180%)",
+              borderColor: "rgba(255,255,255,0.3)",
             }}
             initial={{ opacity: 0, y: 14, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -106,30 +106,30 @@ export function EmailModal({ open, onClose }: Props) {
             transition={{ type: "spring", stiffness: 260, damping: 24 }}
           >
             <div className="px-6 pb-6 pt-5">
-              <div className="mb-1 flex items-center justify-between">
-                <h2 className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6a6050]">
+              <div className="mb-2 flex items-center justify-between">
+                <h2 className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6a6050]">
                   Send a message
                 </h2>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="text-[18px] leading-none text-[#6a6050] transition-colors hover:text-[#1e1a16]"
+                  className="text-[14px] leading-none font-light text-[#6a6050] transition-colors hover:text-[#1e1a16]"
                   aria-label="Close"
                 >
                   ×
                 </button>
               </div>
 
-              <p className="mb-4 text-[12px] lowercase text-[#6a6050]">
+              <p className="mb-6 text-[12px] leading-relaxed tracking-[-0.011em] lowercase text-[#6a6050]">
                 drop a line and i&apos;ll get back as soon as i can.
               </p>
 
               {status === "sent" ? (
                 <div className="flex flex-col gap-3 py-6 text-center">
-                  <p className="text-[14px] font-semibold lowercase text-[#1e1a16]">
+                  <p className="text-[14px] font-semibold tracking-[-0.022em] lowercase text-[#1e1a16]">
                     message sent.
                   </p>
-                  <p className="text-[12px] lowercase text-[#6a6050]">
+                  <p className="text-[12px] leading-relaxed tracking-[-0.011em] lowercase text-[#6a6050]">
                     thanks — i&apos;ll reply soon.
                   </p>
                   <button
@@ -141,7 +141,7 @@ export function EmailModal({ open, onClose }: Props) {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={onSubmit} className="flex flex-col gap-2.5">
+                <form onSubmit={onSubmit} className="flex flex-col gap-3">
                   <input
                     className="modal-input"
                     placeholder="name"
@@ -170,16 +170,22 @@ export function EmailModal({ open, onClose }: Props) {
                     </p>
                   ) : null}
 
-                  <div className="mt-2 flex items-center justify-between">
+                  <div className="mt-3 flex items-center justify-between">
                     <span className="text-[10px] lowercase text-[#a09880]">
                       {message.length}/280 — 2-4 sentences is plenty
                     </span>
                     <button
                       type="submit"
                       disabled={!canSubmit}
-                      className="rounded-full border border-[rgba(30,26,22,0.25)] bg-[rgba(255,255,255,0.5)] px-4 py-1.5 text-[12px] font-semibold lowercase text-[#1e1a16] transition-[background,border-color,opacity] duration-200 hover:bg-[rgba(255,255,255,0.8)] disabled:cursor-not-allowed disabled:opacity-50"
+                      className="group relative bg-transparent p-0 text-[12px] lowercase text-[#6a6050] transition-colors duration-200 hover:text-[#1e1a16] disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {status === "sending" ? "sending…" : "send"}
+                      <span className="inline-flex items-center gap-1">
+                        {status === "sending" ? "sending…" : "send"}
+                        <span className="translate-x-0 opacity-0 transition-[transform,opacity] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100">
+                          →
+                        </span>
+                      </span>
+                      <span className="absolute -bottom-[2px] left-0 h-px w-0 bg-[rgba(30,26,22,0.55)] transition-all duration-200 group-hover:w-full" />
                     </button>
                   </div>
                 </form>
