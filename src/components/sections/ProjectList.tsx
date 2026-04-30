@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { projects } from "@/content/projects"
 
 const TAG_STYLES: Record<string, { color: string; background: string }> = {
@@ -24,8 +24,16 @@ export function ProjectList() {
   const targetPos = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
 
+  const tickRef = useRef<() => void>(() => {})
+
+  const startLoop = useCallback(() => {
+    if (rafRef.current == null) {
+      rafRef.current = requestAnimationFrame(tickRef.current)
+    }
+  }, [])
+
   useEffect(() => {
-    const tick = () => {
+    tickRef.current = () => {
       smoothPos.current.x += (targetPos.current.x - smoothPos.current.x) * 0.13
       smoothPos.current.y += (targetPos.current.y - smoothPos.current.y) * 0.13
 
@@ -41,18 +49,12 @@ export function ProjectList() {
         rafRef.current = null
         return
       }
-      rafRef.current = requestAnimationFrame(tick)
-    }
-
-    const startLoop = () => {
-      if (rafRef.current == null) {
-        rafRef.current = requestAnimationFrame(tick)
-      }
+      rafRef.current = requestAnimationFrame(tickRef.current)
     }
 
     const onMove = (e: MouseEvent) => {
-      targetPos.current.x = e.clientX
-      targetPos.current.y = e.clientY
+      targetPos.current.x = e.pageX
+      targetPos.current.y = e.pageY
       startLoop()
     }
 
@@ -61,7 +63,7 @@ export function ProjectList() {
       window.removeEventListener("mousemove", onMove)
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
     }
-  }, [])
+  }, [startLoop])
 
   return (
     <div className="relative">
@@ -162,9 +164,12 @@ export function ProjectList() {
           target={p.links?.[0]?.href ? "_blank" : undefined}
           rel="noreferrer"
           className="project-row group relative block no-underline"
-          onMouseEnter={() => {
+          onMouseEnter={(e) => {
             setHoveredId(p.id)
             setVisible(true)
+            targetPos.current.x = e.pageX
+            targetPos.current.y = e.pageY
+            startLoop()
           }}
           onMouseLeave={() => {
             setVisible(false)
