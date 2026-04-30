@@ -8,12 +8,22 @@ import { GrainGradient } from "@paper-design/shaders-react"
 // render budget here drops GPU fragment work by ~75% with no perceptible change.
 const MIN_PIXEL_RATIO = 1
 const MAX_PIXEL_COUNT = 1280 * 720
+const ACTIVE_SPEED = 0.45
+const SHADER_COLORS = ["#e7dccf", "#d7c5b2", "#c7b5a0", "#b8a58f"]
+const SHADER_STYLE = { height: "100%", width: "100%" } as const
 
-function PaperDesignShaderBackgroundImpl() {
+type Props = {
+  // When true, the WebGL render loop halts (speed=0). The library cancels its
+  // rAF entirely in that case, so any backdrop-filter layered above us becomes
+  // a cacheable composited layer instead of being re-blurred every frame.
+  paused?: boolean
+}
+
+function PaperDesignShaderBackgroundImpl({ paused = false }: Props) {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
       <GrainGradient
-        style={{ height: "100%", width: "100%" }}
+        style={SHADER_STYLE}
         minPixelRatio={MIN_PIXEL_RATIO}
         maxPixelCount={MAX_PIXEL_COUNT}
         colorBack="#efe7dc"
@@ -25,8 +35,8 @@ function PaperDesignShaderBackgroundImpl() {
         offsetY={0}
         scale={1.08}
         rotation={-4}
-        speed={0.45}
-        colors={["#e7dccf", "#d7c5b2", "#c7b5a0", "#b8a58f"]}
+        speed={paused ? 0 : ACTIVE_SPEED}
+        colors={SHADER_COLORS}
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(231, 231, 255, 0.38),transparent_52%),radial-gradient(circle_at_84%_22%,rgba(138,102,76,0.14),transparent_56%),radial-gradient(circle_at_72%_78%,rgba(84,66,54,0.08),transparent_58%)]" />
     </div>

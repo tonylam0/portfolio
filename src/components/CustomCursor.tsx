@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { memo, useEffect, useRef } from "react"
 
 const SIZE = 30
 // Stop the rAF loop once we're within this many pixels of the target. Restarts
@@ -8,7 +8,22 @@ const SIZE = 30
 // freeing the compositor when the user isn't moving the mouse.
 const REST_EPSILON = 0.05
 
-export function CustomCursor() {
+type Props = {
+  // mix-blend-difference forces the compositor to read the rasterized backdrop
+  // beneath the cursor on every move. When a heavy backdrop-filter region is
+  // visible (e.g. the email modal's frosted scrim + panel), that read requires
+  // re-evaluating the gaussian blur per frame — the dominant cost behind the
+  // sluggish cursor. Setting `flat` swaps to a non-blending dark ring, which
+  // composites with no readback and stays smooth over filter regions.
+  flat?: boolean
+}
+
+const CLASS_BASE = "pointer-events-none fixed left-0 top-0 z-[100]"
+const CLASS_BLEND = `${CLASS_BASE} mix-blend-difference`
+const BORDER_BLEND = "1.5px solid rgba(255,255,255,0.85)"
+const BORDER_FLAT = "1.5px solid rgba(30,26,22,0.55)"
+
+function CustomCursorImpl({ flat = false }: Props) {
   const dotRef = useRef<HTMLDivElement | null>(null)
   const targetX = useRef(0)
   const targetY = useRef(0)
@@ -74,14 +89,17 @@ export function CustomCursor() {
     <div
       ref={dotRef}
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[100] mix-blend-difference"
+      className={flat ? CLASS_BASE : CLASS_BLEND}
       style={{
         width: SIZE,
         height: SIZE,
         borderRadius: "50%",
-        border: "1.5px solid rgba(255,255,255,0.85)",
+        border: flat ? BORDER_FLAT : BORDER_BLEND,
         willChange: "transform",
+        transition: "border-color 200ms ease",
       }}
     />
   )
 }
+
+export const CustomCursor = memo(CustomCursorImpl)
