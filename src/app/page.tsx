@@ -18,7 +18,7 @@ export default function Page() {
     <>
       <PaperDesignShaderBackground paused={emailOpen} />
       <GrainOverlay />
-      <CustomCursor flat={emailOpen} />
+      <CustomCursor />
 
       <motion.div
         className="relative z-10 mx-auto min-h-screen max-w-[1040px] px-8 py-16"
