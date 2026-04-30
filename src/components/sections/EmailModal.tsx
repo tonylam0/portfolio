@@ -1,7 +1,7 @@
 "use client"
 
-import { memo, useEffect, useState } from "react"
-import { AnimatePresence, motion, type Transition } from "framer-motion"
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
 
 type Props = {
   open: boolean
@@ -10,54 +10,7 @@ type Props = {
 
 type SendStatus = "idle" | "sending" | "sent" | "error"
 
-// Hoisted to module scope so React/Framer Motion see stable object identities
-// across keystroke re-renders. New literals on every render force Framer to
-// diff and reapply inline styles, which can invalidate the panel's expensive
-// backdrop-filter compositor layer.
-const OVERLAY_INITIAL = { opacity: 0 }
-const OVERLAY_ANIMATE = { opacity: 1 }
-const OVERLAY_EXIT = { opacity: 0 }
-const OVERLAY_TRANSITION: Transition = { duration: 0.18 }
-
-// The scrim is a flat alpha overlay — no backdrop-filter. We previously stacked
-// `backdrop-blur-md` over the entire viewport beneath the panel's own 20px blur,
-// which forced the compositor to evaluate two backdrop-filters per frame for
-// anything reading through it. The panel's own blur dominates the visual, so
-// dropping the scrim's blur is imperceptible while removing a full-viewport
-// per-frame filter pass. `willChange: opacity` lets the fade-in run on its own
-// composited layer so it doesn't repaint the rest of the page.
-const SCRIM_STYLE = {
-  background: "rgba(30,26,22,0.18)",
-  willChange: "opacity",
-  contain: "paint",
-} as const
-
-// `contain: layout paint style` + `willChange: transform, opacity` promote the
-// panel to its own GPU layer so its expensive `backdrop-filter: blur(20px)`
-// output is rasterized once and cached as a compositor texture. `isolation:
-// isolate` makes that explicit by creating a fresh stacking context, which
-// also keeps any future blend-mode descendants from forcing repaints in the
-// surrounding tree.
-const PANEL_STYLE = {
-  background: "rgba(240,235,227,0.42)",
-  backdropFilter: "blur(20px) saturate(180%)",
-  WebkitBackdropFilter: "blur(20px) saturate(180%)",
-  borderColor: "rgba(255,255,255,0.3)",
-  contain: "layout paint style",
-  isolation: "isolate",
-  willChange: "transform, opacity",
-} as const
-
-const PANEL_INITIAL = { opacity: 0, y: 14, scale: 0.97 }
-const PANEL_ANIMATE = { opacity: 1, y: 0, scale: 1 }
-const PANEL_EXIT = { opacity: 0, y: 8, scale: 0.98 }
-const PANEL_TRANSITION: Transition = {
-  type: "spring",
-  stiffness: 260,
-  damping: 24,
-}
-
-function EmailModalImpl({ open, onClose }: Props) {
+export function EmailModal({ open, onClose }: Props) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
@@ -122,30 +75,40 @@ function EmailModalImpl({ open, onClose }: Props) {
       {open ? (
         <motion.div
           className="fixed inset-0 z-[80] flex items-center justify-center px-4"
-          initial={OVERLAY_INITIAL}
-          animate={OVERLAY_ANIMATE}
-          exit={OVERLAY_EXIT}
-          transition={OVERLAY_TRANSITION}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
         >
           <motion.div
             aria-hidden="true"
             className="absolute inset-0"
-            style={SCRIM_STYLE}
+            style={{
+              background: "rgba(30,26,22,0.18)",
+              willChange: "opacity",
+              contain: "paint",
+            }}
             onClick={onClose}
-            initial={OVERLAY_INITIAL}
-            animate={OVERLAY_ANIMATE}
-            exit={OVERLAY_EXIT}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           />
 
           <motion.div
             role="dialog"
             aria-label="Send email"
             className="relative w-full max-w-[420px] overflow-hidden rounded-[14px] border shadow-[0_24px_60px_-20px_rgba(30,26,22,0.28)]"
-            style={PANEL_STYLE}
-            initial={PANEL_INITIAL}
-            animate={PANEL_ANIMATE}
-            exit={PANEL_EXIT}
-            transition={PANEL_TRANSITION}
+            style={{
+              background: "rgba(240,235,227,0.42)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              WebkitBackdropFilter: "blur(20px) saturate(180%)",
+              borderColor: "rgba(255,255,255,0.3)",
+              isolation: "isolate",
+            }}
+            initial={{ opacity: 0, y: 14, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 260, damping: 24 }}
           >
             <div className="px-6 pb-6 pt-5">
               <div className="mb-2 flex items-center justify-between">
@@ -239,5 +202,3 @@ function EmailModalImpl({ open, onClose }: Props) {
     </AnimatePresence>
   )
 }
-
-export const EmailModal = memo(EmailModalImpl)

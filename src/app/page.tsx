@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { GrainOverlay } from "@/components/GrainOverlay"
 import { CustomCursor } from "@/components/CustomCursor"
@@ -11,12 +11,10 @@ import { EmailModal } from "@/components/sections/EmailModal"
 
 export default function Page() {
   const [emailOpen, setEmailOpen] = useState(false)
-  const openEmail = useCallback(() => setEmailOpen(true), [])
-  const closeEmail = useCallback(() => setEmailOpen(false), [])
 
   return (
     <>
-      <PaperDesignShaderBackground paused={emailOpen} />
+      <PaperDesignShaderBackground />
       <GrainOverlay />
       <CustomCursor />
 
@@ -28,7 +26,7 @@ export default function Page() {
       >
         <div className="flex gap-0">
           <div className="w-[240px] shrink-0">
-            <Sidebar onEmailClick={openEmail} />
+            <Sidebar onEmailClick={() => setEmailOpen(true)} />
           </div>
 
           <div className="min-w-0 flex-1 border-l border-[rgba(30,26,22,0.12)] pl-16 md:pl-20">
@@ -51,7 +49,7 @@ export default function Page() {
         </div>
       </motion.div>
 
-      <EmailModal open={emailOpen} onClose={closeEmail} />
+      <EmailModal open={emailOpen} onClose={() => setEmailOpen(false)} />
     </>
   )
 }
