@@ -10,12 +10,12 @@ type Props = {
 
 export function Sidebar({ onEmailClick }: Props) {
   return (
-    <aside className="sticky top-16 flex flex-col gap-8 pr-10">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-[18px] font-bold lowercase text-[#1e1a16]">
+    <aside className="sticky top-16 flex flex-col gap-8 pr-12">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-[18px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
           tony lam
         </h1>
-        <p className="text-[12px] leading-relaxed text-[#6a6050]">
+        <p className="text-[12px] leading-relaxed tracking-[-0.011em] text-[#6a6050]">
           uva student &amp; full-stack developer.
           <br />
           tinkering, building, learning.

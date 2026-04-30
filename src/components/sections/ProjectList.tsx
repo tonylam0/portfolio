@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react"
 import { projects } from "@/content/projects"
 
-const TAG_STYLES: Record<string, { color: string; border: string }> = {
-  AI:         { color: "#7b4f8e", border: "#7b4f8e" },
-  Web:        { color: "#5fa898", border: "#5fa898" },
-  Math:       { color: "#7a6f28", border: "#c4be5a" },
-  Simulation: { color: "#3d7a6e", border: "#accfa3" },
-  Creative:   { color: "#a04080", border: "#c47fa8" },
+const TAG_STYLES: Record<string, { color: string; background: string }> = {
+  AI: { color: "#6f4a84", background: "rgba(123,79,142,0.12)" },
+  Web: { color: "#4c8f81", background: "rgba(95,168,152,0.12)" },
+  Math: { color: "#756c2a", background: "rgba(196,190,90,0.17)" },
+  Simulation: { color: "#356b61", background: "rgba(172,207,163,0.22)" },
+  Creative: { color: "#8f3b71", background: "rgba(196,127,168,0.16)" },
 }
 
 const REST_EPSILON = 0.1
@@ -62,8 +62,8 @@ export function ProjectList() {
 
   return (
     <div className="relative">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6a6050]">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6a6050]">
           Projects
         </h2>
       </div>
@@ -131,10 +131,10 @@ export function ProjectList() {
           {/* Hover slab */}
           <div className="absolute inset-y-1 -inset-x-3 rounded-lg bg-[rgba(172,207,163,0.22)] opacity-0 transition-[opacity,transform] duration-[250ms] ease-out group-hover:opacity-100" />
 
-          <div className="relative flex items-start justify-between gap-4 border-t border-[rgba(30,26,22,0.12)] py-3.5 last:border-b">
+          <div className="relative flex items-start justify-between gap-6 border-t border-[rgba(30,26,22,0.12)] py-4 last:border-b">
             <div className="min-w-0 flex-1">
-              <div className="mb-1 flex items-center gap-1.5">
-                <span className="project-link proj-name text-[15px] font-bold lowercase text-[#1e1a16]">
+              <div className="mb-2 flex items-center gap-1.5">
+                <span className="project-link proj-name text-[15px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
                   {p.title}
                 </span>
                 <svg
@@ -147,7 +147,7 @@ export function ProjectList() {
                   <path d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>
               </div>
-              <p className="text-[12px] leading-relaxed lowercase text-[#6a6050] transition-colors duration-200 group-hover:text-[#3a342c]">
+              <p className="text-[12px] font-normal leading-[1.55] lowercase tracking-[-0.011em] text-[#6a6050] transition-colors duration-200 group-hover:text-[#3a342c]">
                 {p.listDescription ?? p.description}
               </p>
             </div>
@@ -156,14 +156,14 @@ export function ProjectList() {
               <span className="font-mono text-[10px] text-[#8a8070] transition-colors duration-200 group-hover:text-[#3a342c]">
                 {p.year ?? "2024"}
               </span>
-              <div className="flex flex-wrap justify-end gap-1">
+              <div className="flex flex-wrap justify-end gap-2">
                 {p.tags.map((tag) => {
-                  const s = TAG_STYLES[tag] ?? { color: "#6a6050", border: "#6a6050" }
+                  const s = TAG_STYLES[tag] ?? { color: "#6a6050", background: "rgba(0,0,0,0.05)" }
                   return (
                     <span
                       key={tag}
-                      className="rounded-full border px-[7px] py-[2px] text-[9px] font-semibold lowercase tracking-[0.02em]"
-                      style={{ color: s.color, borderColor: s.border }}
+                      className="rounded-[10px] px-2 py-[3px] text-[9px] font-semibold lowercase tracking-[0.01em]"
+                      style={{ color: s.color, background: s.background }}
                     >
                       {tag}
                     </span>
