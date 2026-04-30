@@ -11,32 +11,52 @@ const TAG_STYLES: Record<string, { color: string; border: string }> = {
   Creative:   { color: "#a04080", border: "#c47fa8" },
 }
 
+const REST_EPSILON = 0.1
+
 export function ProjectList() {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
-  const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 })
+  const previewRef = useRef<HTMLDivElement | null>(null)
   const smoothPos = useRef({ x: 0, y: 0 })
   const targetPos = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      targetPos.current = { x: e.clientX, y: e.clientY }
-    }
-    window.addEventListener("mousemove", onMove)
-    return () => window.removeEventListener("mousemove", onMove)
-  }, [])
-
-  useEffect(() => {
-    function loop() {
+    const tick = () => {
       smoothPos.current.x += (targetPos.current.x - smoothPos.current.x) * 0.13
       smoothPos.current.y += (targetPos.current.y - smoothPos.current.y) * 0.13
-      setPreviewPos({ x: smoothPos.current.x, y: smoothPos.current.y })
-      rafRef.current = requestAnimationFrame(loop)
+
+      const el = previewRef.current
+      if (el) {
+        el.style.left = `${smoothPos.current.x + 24}px`
+        el.style.top = `${smoothPos.current.y - 84}px`
+      }
+
+      const dx = targetPos.current.x - smoothPos.current.x
+      const dy = targetPos.current.y - smoothPos.current.y
+      if (Math.hypot(dx, dy) < REST_EPSILON) {
+        rafRef.current = null
+        return
+      }
+      rafRef.current = requestAnimationFrame(tick)
     }
-    rafRef.current = requestAnimationFrame(loop)
+
+    const startLoop = () => {
+      if (rafRef.current == null) {
+        rafRef.current = requestAnimationFrame(tick)
+      }
+    }
+
+    const onMove = (e: MouseEvent) => {
+      targetPos.current.x = e.clientX
+      targetPos.current.y = e.clientY
+      startLoop()
+    }
+
+    window.addEventListener("mousemove", onMove)
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      window.removeEventListener("mousemove", onMove)
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
     }
   }, [])
 
@@ -50,15 +70,17 @@ export function ProjectList() {
 
       {/* Floating preview card */}
       <div
+        ref={previewRef}
         aria-hidden="true"
         className="pointer-events-none fixed z-50 overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{
           width: 260,
           height: 168,
-          left: previewPos.x + 24,
-          top: previewPos.y - 84,
+          left: 0,
+          top: 0,
           opacity: visible ? 1 : 0,
           transform: visible ? "scale(1)" : "scale(0.88)",
+          willChange: "transform, left, top",
         }}
       >
         {projects.map((p) => (
@@ -112,14 +134,7 @@ export function ProjectList() {
           <div className="relative flex items-start justify-between gap-4 border-t border-[rgba(30,26,22,0.12)] py-3.5 last:border-b">
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-1.5">
-                <span
-                  className="proj-name text-[15px] font-bold lowercase text-[#1e1a16]"
-                  style={{
-                    textDecoration: "underline",
-                    textDecorationColor: "rgba(30,26,22,0.30)",
-                    textUnderlineOffset: "3px",
-                  }}
-                >
+                <span className="project-link proj-name text-[15px] font-bold lowercase text-[#1e1a16]">
                   {p.title}
                 </span>
                 <svg

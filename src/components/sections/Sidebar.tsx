@@ -10,7 +10,7 @@ type Props = {
 
 export function Sidebar({ onEmailClick }: Props) {
   return (
-    <aside className="sticky top-16 flex flex-col gap-8 pr-6">
+    <aside className="sticky top-16 flex flex-col gap-8 pr-10">
       <div className="flex flex-col gap-2">
         <h1 className="text-[18px] font-bold lowercase text-[#1e1a16]">
           tony lam

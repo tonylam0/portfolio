@@ -2,7 +2,11 @@
 
 import { useEffect, useRef } from "react"
 
-const SIZE = 14
+const SIZE = 30
+// Stop the rAF loop once we're within this many pixels of the target. Restarts
+// on the next mousemove. Keeps the cursor pixel-identical when in motion while
+// freeing the compositor when the user isn't moving the mouse.
+const REST_EPSILON = 0.05
 
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement | null>(null)
@@ -12,18 +16,9 @@ export function CustomCursor() {
   const y = useRef(0)
   const lastX = useRef(0)
   const lastY = useRef(0)
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      targetX.current = e.clientX
-      targetY.current = e.clientY
-    }
-    window.addEventListener("mousemove", onMove)
-    return () => window.removeEventListener("mousemove", onMove)
-  }, [])
-
-  useEffect(() => {
-    let raf = 0
     const tick = () => {
       const el = dotRef.current
       x.current += (targetX.current - x.current) * 0.22
@@ -44,10 +39,35 @@ export function CustomCursor() {
 
       lastX.current = x.current
       lastY.current = y.current
-      raf = requestAnimationFrame(tick)
+
+      const distToTarget = Math.hypot(
+        targetX.current - x.current,
+        targetY.current - y.current,
+      )
+      if (distToTarget < REST_EPSILON && speed < REST_EPSILON) {
+        rafRef.current = null
+        return
+      }
+      rafRef.current = requestAnimationFrame(tick)
     }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+
+    const startLoop = () => {
+      if (rafRef.current == null) {
+        rafRef.current = requestAnimationFrame(tick)
+      }
+    }
+
+    const onMove = (e: MouseEvent) => {
+      targetX.current = e.clientX
+      targetY.current = e.clientY
+      startLoop()
+    }
+
+    window.addEventListener("mousemove", onMove)
+    return () => {
+      window.removeEventListener("mousemove", onMove)
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
+    }
   }, [])
 
   return (

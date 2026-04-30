@@ -64,14 +64,9 @@
   body {
     color: #1e1a16;
     min-height: 100%;
-    background:
-      radial-gradient(ellipse 70% 55% at 15% 20%, rgba(123,79,142,0.45) 0%, transparent 60%),
-      radial-gradient(ellipse 65% 50% at 85% 80%, rgba(172,207,163,0.40) 0%, transparent 60%),
-      radial-gradient(ellipse 55% 45% at 75% 15%, rgba(196,127,168,0.35) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 25% 75%, rgba(95,168,152,0.30) 0%, transparent 60%),
-      #f0ebe3;
-    background-attachment: fixed;
+    background-color: #efe7dc;
   }
+
 }
 
 /* Editorial nav link with left-to-right underline reveal on hover */
@@ -105,6 +100,29 @@
 }
 
 .nav-link:hover::after {
+  width: 100%;
+}
+
+/* Project title underline reveal on row hover */
+.project-link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.project-link::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(30, 26, 22, 0.7);
+  transition: width 250ms ease-out;
+}
+
+.group:hover .project-link::after,
+.group:focus-visible .project-link::after {
   width: 100%;
 }
 
