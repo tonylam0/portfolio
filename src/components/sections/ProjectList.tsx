@@ -1,0 +1,164 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import { projects } from "@/content/projects"
+
+const TAG_STYLES: Record<string, { color: string; border: string }> = {
+  AI:         { color: "#7b4f8e", border: "#7b4f8e" },
+  Web:        { color: "#5fa898", border: "#5fa898" },
+  Math:       { color: "#7a6f28", border: "#c4be5a" },
+  Simulation: { color: "#3d7a6e", border: "#accfa3" },
+  Creative:   { color: "#a04080", border: "#c47fa8" },
+}
+
+export function ProjectList() {
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [visible, setVisible] = useState(false)
+  const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 })
+  const smoothPos = useRef({ x: 0, y: 0 })
+  const targetPos = useRef({ x: 0, y: 0 })
+  const rafRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      targetPos.current = { x: e.clientX, y: e.clientY }
+    }
+    window.addEventListener("mousemove", onMove)
+    return () => window.removeEventListener("mousemove", onMove)
+  }, [])
+
+  useEffect(() => {
+    function loop() {
+      smoothPos.current.x += (targetPos.current.x - smoothPos.current.x) * 0.13
+      smoothPos.current.y += (targetPos.current.y - smoothPos.current.y) * 0.13
+      setPreviewPos({ x: smoothPos.current.x, y: smoothPos.current.y })
+      rafRef.current = requestAnimationFrame(loop)
+    }
+    rafRef.current = requestAnimationFrame(loop)
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
+  return (
+    <div className="relative">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6a6050]">
+          Projects
+        </h2>
+      </div>
+
+      {/* Floating preview card */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed z-50 overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+        style={{
+          width: 260,
+          height: 168,
+          left: previewPos.x + 24,
+          top: previewPos.y - 84,
+          opacity: visible ? 1 : 0,
+          transform: visible ? "scale(1)" : "scale(0.88)",
+        }}
+      >
+        {projects.map((p) => (
+          <div
+            key={p.id}
+            className="absolute inset-0 transition-[opacity,transform,filter] duration-[400ms] ease-out"
+            style={{
+              opacity: hoveredId === p.id ? 1 : 0,
+              transform: hoveredId === p.id ? "scale(1)" : "scale(1.08)",
+              filter: hoveredId === p.id ? "none" : "blur(6px)",
+            }}
+          >
+            {p.previewImage ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={p.previewImage}
+                alt={p.title}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div
+                className="h-full w-full"
+                style={{ background: "linear-gradient(135deg,#1a1a2e,#2d2d4e)" }}
+              />
+            )}
+          </div>
+        ))}
+        <div className="absolute inset-0 rounded-[10px] bg-gradient-to-t from-black/20 to-transparent" />
+      </div>
+
+      {/* Project rows */}
+      {projects.map((p) => (
+        <a
+          key={p.id}
+          href={p.links?.[0]?.href ?? "#"}
+          target={p.links?.[0]?.href ? "_blank" : undefined}
+          rel="noreferrer"
+          className="project-row group relative block no-underline"
+          onMouseEnter={() => {
+            setHoveredId(p.id)
+            setVisible(true)
+          }}
+          onMouseLeave={() => {
+            setVisible(false)
+            setHoveredId(null)
+          }}
+        >
+          {/* Hover slab */}
+          <div className="absolute inset-y-1 -inset-x-3 rounded-lg bg-[rgba(172,207,163,0.22)] opacity-0 transition-[opacity,transform] duration-[250ms] ease-out group-hover:opacity-100" />
+
+          <div className="relative flex items-start justify-between gap-4 border-t border-[rgba(30,26,22,0.12)] py-3.5 last:border-b">
+            <div className="min-w-0 flex-1">
+              <div className="mb-1 flex items-center gap-1.5">
+                <span
+                  className="proj-name text-[15px] font-bold lowercase text-[#1e1a16]"
+                  style={{
+                    textDecoration: "underline",
+                    textDecorationColor: "rgba(30,26,22,0.30)",
+                    textUnderlineOffset: "3px",
+                  }}
+                >
+                  {p.title}
+                </span>
+                <svg
+                  className="arrow h-[14px] w-[14px] shrink-0 text-[#6a6050] opacity-0 -translate-x-1 translate-y-1 transition-[opacity,transform] duration-[250ms] ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </div>
+              <p className="text-[12px] leading-relaxed lowercase text-[#6a6050] transition-colors duration-200 group-hover:text-[#3a342c]">
+                {p.listDescription ?? p.description}
+              </p>
+            </div>
+
+            <div className="flex shrink-0 flex-col items-end gap-2">
+              <span className="font-mono text-[10px] text-[#8a8070] transition-colors duration-200 group-hover:text-[#3a342c]">
+                {p.year ?? "2024"}
+              </span>
+              <div className="flex flex-wrap justify-end gap-1">
+                {p.tags.map((tag) => {
+                  const s = TAG_STYLES[tag] ?? { color: "#6a6050", border: "#6a6050" }
+                  return (
+                    <span
+                      key={tag}
+                      className="rounded-full border px-[7px] py-[2px] text-[9px] font-semibold lowercase tracking-[0.02em]"
+                      style={{ color: s.color, borderColor: s.border }}
+                    >
+                      {tag}
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  )
+}

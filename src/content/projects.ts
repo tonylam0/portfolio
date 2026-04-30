@@ -4,6 +4,8 @@ export type Project = {
   id: string
   title: string
   description: string
+  listDescription?: string
+  year?: string
   tags: string[]
   gridClassName: string
   problem: string
@@ -18,7 +20,9 @@ export const projects: Project[] = [
     id: "wallhax",
     title: "WallHax",
     description: "An award-winning multi-device AR platform with post-mission 3D environmental rendering for shared situational awareness.",
-    tags: ["AI", "Web", "Creative"],
+    listDescription: "award-winning ar platform for shared situational awareness.",
+    year: "2026",
+    tags: ["AI", "Web"],
     gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
     problem: "Teams in hazardous environments (SAR, military) operate blind indoors. We needed to sync live spatial data across devices and generate photorealistic post-mission 3D digital environments.",
     stack: ["Swift (ARKit)", "Python", "React", "Three.js", "Luma AI", "Matplotlib"],
@@ -39,6 +43,8 @@ export const projects: Project[] = [
     id: "digits-recognition",
     title: "Digits Recognition",
     description: "A neural network built entirely from scratch without external ML frameworks.",
+    listDescription: "neural network from scratch — no ml frameworks, pure math.",
+    year: "2025",
     tags: ["AI", "Math"],
     gridClassName: "col-span-1 md:col-span-5 md:row-span-2",
     problem: "Understand the underlying mathematics of machine learning by implementing core algorithms manually.",
@@ -56,6 +62,8 @@ export const projects: Project[] = [
     id: "planet-sim",
     title: "Planetary Simulation",
     description: "A physics-based simulation of the inner solar system and orbital mechanics.",
+    listDescription: "physics-based simulation of the inner solar system.",
+    year: "2025",
     tags: ["Simulation", "Math"],
     gridClassName: "col-span-1 md:col-span-5 md:row-span-2",
     problem: "Accurately model complex gravitational attraction and orbital physics in real-time.",
@@ -72,6 +80,8 @@ export const projects: Project[] = [
     id: "evergreen",
     title: "Evergreen",
     description: "A full-stack web platform for sharing and reviewing video essays.",
+    listDescription: "platform for video essays with an age-boosted discovery algorithm.",
+    year: "2024",
     tags: ["Creative", "Web"],
     gridClassName: "col-span-1 md:col-span-7 md:row-span-2",
     problem: 'Engineering a "non-brainrotting" discovery engine that surfaces timeless content through human curation and an age-boosted algorithm.',
@@ -88,6 +98,8 @@ export const projects: Project[] = [
     id: "personal-website",
     title: "Personal website",
     description: "My personal website to share my thoughts and workflow.",
+    listDescription: "minimalistic site showcasing thoughts and workflow.",
+    year: "2024",
     tags: ["Creative", "Web"],
     gridClassName: "col-span-1 md:col-span-4 md:row-span-2",
     problem: "Create an minimalistic website that showcases my life and thoughts.",
@@ -104,6 +116,8 @@ export const projects: Project[] = [
     id: "mandelbrot-generator",
     title: "Mandelbrot Set Generator",
     description: "An interactive fractal explorer with real-time color mapping and formula tweaks.",
+    listDescription: "interactive fractal explorer with real-time color mapping.",
+    year: "2024",
     tags: ["Math", "Simulation"],
     gridClassName: "col-span-1 md:col-span-8 md:row-span-2",
     problem: "Render high-resolution fractals interactively while allowing dynamic changes to complex mathematical bounds.",
