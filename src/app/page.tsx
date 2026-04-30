@@ -35,8 +35,7 @@ export default function Page() {
                 About
               </h2>
               <p className="max-w-[620px] text-[15px] leading-[1.6] tracking-[-0.011em] text-[#1e1a16]">
-                studying computer science at the <strong>university of virginia</strong>. interested in{" "}
-                <strong>full-stack architecture</strong>, ai, and simulation. currently available for work.
+                cs student @ uva interested in full-stack architecture. currently available for work.
               </p>
             </section>
 
@@ -47,7 +46,7 @@ export default function Page() {
             </footer>
           </div>
         </div>
-      </motion.div>
+      </motion.div >
 
       <EmailModal open={emailOpen} onClose={() => setEmailOpen(false)} />
     </>

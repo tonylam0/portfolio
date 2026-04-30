@@ -9,6 +9,9 @@ const TAG_STYLES: Record<string, { color: string; background: string }> = {
   Math: { color: "#756c2a", background: "rgba(196,190,90,0.17)" },
   Simulation: { color: "#356b61", background: "rgba(172,207,163,0.22)" },
   Creative: { color: "#8f3b71", background: "rgba(196,127,168,0.16)" },
+  typescript: { color: "#2e5f9d", background: "rgba(95,133,197,0.16)" },
+  aws: { color: "#8a5e22", background: "rgba(219,164,90,0.18)" },
+  node: { color: "#3d6e3c", background: "rgba(123,170,111,0.18)" },
 }
 
 const REST_EPSILON = 0.1
@@ -62,6 +65,46 @@ export function ProjectList() {
 
   return (
     <div className="relative">
+      <div className="mb-16">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6a6050]">
+            Experience
+          </h2>
+        </div>
+
+        <div className="flex items-start justify-between gap-6 border-y border-[rgba(30,26,22,0.12)] py-4">
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex items-center gap-1.5">
+              <span className="text-[15px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
+                cargo labs
+              </span>
+            </div>
+            <p className="text-[12px] font-normal leading-[1.55] lowercase tracking-[-0.011em] text-[#6a6050]">
+              software engineering intern. building serverless aws workflows and react interfaces for freight
+              logistics.
+            </p>
+          </div>
+
+          <div className="flex shrink-0 flex-col items-end gap-2">
+            <span className="font-mono text-[10px] text-[#8a8070]">mar 2026 — present</span>
+            <div className="flex flex-wrap justify-end gap-2">
+              {["typescript", "aws", "node"].map((tag) => {
+                const s = TAG_STYLES[tag] ?? { color: "#6a6050", background: "rgba(0,0,0,0.05)" }
+                return (
+                  <span
+                    key={tag}
+                    className="rounded-[10px] px-2 py-[3px] text-[9px] font-semibold lowercase tracking-[0.01em]"
+                    style={{ color: s.color, background: s.background }}
+                  >
+                    {tag}
+                  </span>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6a6050]">
           Projects
