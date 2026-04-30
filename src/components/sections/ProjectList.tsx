@@ -24,7 +24,7 @@ export function ProjectList() {
   const targetPos = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
 
-  const tickRef = useRef<() => void>(() => {})
+  const tickRef = useRef<() => void>(() => { })
 
   const startLoop = useCallback(() => {
     if (rafRef.current == null) {
@@ -39,8 +39,8 @@ export function ProjectList() {
 
       const el = previewRef.current
       if (el) {
-        el.style.left = `${smoothPos.current.x + 24}px`
-        el.style.top = `${smoothPos.current.y - 84}px`
+        el.style.left = `${smoothPos.current.x - 100}px`
+        el.style.top = `${smoothPos.current.y - 100}px`
       }
 
       const dx = targetPos.current.x - smoothPos.current.x
