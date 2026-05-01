@@ -122,39 +122,70 @@ export function EmailModal({ open, onClose }: Props) {
             transition={{ type: "spring", stiffness: 260, damping: 24 }}
           >
             <div className="px-6 pb-6 pt-5">
-              <div className="mb-2 flex items-center justify-between">
-                <h2 className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6a6050]">
-                  Send a message
-                </h2>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="text-[14px] leading-none font-light text-[#6a6050] transition-colors hover:text-[#1e1a16]"
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-              </div>
+              {status !== "sent" && (
+                <>
+                  <div className="mb-2 flex items-center justify-between">
+                    <h2 className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6a6050]">
+                      Send a message
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="text-[14px] leading-none font-light text-[#6a6050] transition-colors hover:text-[#1e1a16]"
+                      aria-label="Close"
+                    >
+                      ×
+                    </button>
+                  </div>
 
-              <p className="mb-6 text-[12px] leading-relaxed tracking-[-0.011em] lowercase text-[#6a6050]">
-                drop a line and i&apos;ll get back as soon as i can.
-              </p>
+                  <p className="mb-6 text-[12px] leading-relaxed tracking-[-0.011em] lowercase text-[#6a6050]">
+                    drop a message and i&apos;ll get back as soon as i can.
+                  </p>
+                </>
+              )}
 
               {status === "sent" ? (
-                <div className="flex flex-col gap-3 py-6 text-center">
-                  <p className="text-[14px] font-semibold tracking-[-0.022em] lowercase text-[#1e1a16]">
-                    message sent.
-                  </p>
-                  <p className="text-[12px] leading-relaxed tracking-[-0.011em] lowercase text-[#6a6050]">
-                    thanks for sending the message.
-                  </p>
-                  <button
+                <div className="flex flex-col items-center gap-5 pb-2 pt-4">
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                    <motion.circle
+                      cx="28" cy="28" r="24"
+                      stroke="rgba(106,96,80,0.35)"
+                      strokeWidth="1.5"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    />
+                    <motion.path
+                      d="M 17 28 L 24 35 L 39 20"
+                      stroke="#1e1a16"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.35, ease: "easeOut", delay: 0.4 }}
+                    />
+                  </svg>
+
+                  <div className="flex flex-col items-center gap-1.5">
+                    <p className="text-[15px] font-semibold tracking-[-0.022em] text-[#1e1a16]">
+                      Message Sent
+                    </p>
+                    <p className="text-[12px] leading-relaxed text-[#86868b]">
+                      i&apos;ll be replying as soon
+                    </p>
+                  </div>
+
+                  <motion.button
                     type="button"
                     onClick={onClose}
-                    className="mx-auto mt-2 text-[12px] lowercase underline decoration-[rgba(30,26,22,0.3)] underline-offset-[3px] transition-colors hover:decoration-[#1e1a16]"
+                    whileTap={{ scale: 0.95 }}
+                    className="mt-1 rounded-full bg-[#1e1a16] px-8 py-2 text-[13px] font-medium text-[rgba(240,235,227,0.92)] transition-opacity hover:opacity-75"
                   >
-                    close
-                  </button>
+                    Done
+                  </motion.button>
                 </div>
               ) : (
                 <form onSubmit={onSubmit} className="flex flex-col gap-3">
