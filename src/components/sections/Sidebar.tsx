@@ -16,7 +16,7 @@ export function Sidebar({ onEmailClick }: Props) {
           tony lam
         </h1>
         <p className="text-[12px] leading-relaxed tracking-[-0.011em] text-[#6a6050]">
-          tinkering, building, learning.
+          charlottesville, virginia
         </p>
       </div>
 
