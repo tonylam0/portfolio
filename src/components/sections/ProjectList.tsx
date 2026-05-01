@@ -78,12 +78,11 @@ export function ProjectList() {
           <div className="min-w-0 flex-1">
             <div className="mb-2 flex items-center gap-1.5">
               <span className="text-[15px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
-                cargo labs
+                cargolabs
               </span>
             </div>
             <p className="text-[12px] font-normal leading-[1.55] lowercase tracking-[-0.011em] text-[#6a6050]">
-              software engineering intern. building serverless aws workflows and react interfaces for freight
-              logistics.
+              building serverless aws workflows and react interfaces for freight logistics.
             </p>
           </div>
 
