@@ -17,12 +17,17 @@ const TAG_STYLES: Record<string, { color: string; background: string }> = {
 const REST_EPSILON = 0.1
 
 export function ProjectList() {
+  const [hasPointer, setHasPointer] = useState(false)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
   const previewRef = useRef<HTMLDivElement | null>(null)
   const smoothPos = useRef({ x: 0, y: 0 })
   const targetPos = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    setHasPointer(window.matchMedia("(pointer: fine)").matches)
+  }, [])
 
   const tickRef = useRef<() => void>(() => { })
 
@@ -112,11 +117,11 @@ export function ProjectList() {
         </h2>
       </div>
 
-      {/* Floating preview card — hidden on touch/mobile */}
+      {/* Floating preview card — pointer devices only */}
       <div
         ref={previewRef}
         aria-hidden="true"
-        className="pointer-events-none fixed z-50 hidden overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] sm:block"
+        className={`pointer-events-none fixed z-50 overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${hasPointer ? "block" : "hidden"}`}
         style={{
           width: 260,
           height: 168,
@@ -162,18 +167,18 @@ export function ProjectList() {
           href={p.links?.[0]?.href ?? "#"}
           target={p.links?.[0]?.href ? "_blank" : undefined}
           rel="noreferrer"
-          className="project-row group relative block no-underline"
-          onMouseEnter={(e) => {
+          className={`project-row relative block no-underline${hasPointer ? " group" : ""}`}
+          onMouseEnter={hasPointer ? (e) => {
             setHoveredId(p.id)
             setVisible(true)
             targetPos.current.x = e.pageX
             targetPos.current.y = e.pageY
             startLoop()
-          }}
-          onMouseLeave={() => {
+          } : undefined}
+          onMouseLeave={hasPointer ? () => {
             setVisible(false)
             setHoveredId(null)
-          }}
+          } : undefined}
         >
           {/* Hover slab */}
           <div className="absolute inset-y-1 -inset-x-3 rounded-lg bg-[rgba(172,207,163,0.22)] opacity-0 transition-[opacity,transform] duration-[250ms] ease-out group-hover:opacity-100" />

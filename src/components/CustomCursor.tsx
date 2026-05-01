@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useEffect, useRef } from "react"
+import { memo, useEffect, useRef, useState } from "react"
 
 const SIZE = 30
 // Stop the rAF loop once we're within this many pixels of the target. Restarts
@@ -9,6 +9,7 @@ const SIZE = 30
 const REST_EPSILON = 0.05
 
 function CustomCursorImpl() {
+  const [hasPointer, setHasPointer] = useState(false)
   const dotRef = useRef<HTMLDivElement | null>(null)
   const targetX = useRef(0)
   const targetY = useRef(0)
@@ -19,6 +20,11 @@ function CustomCursorImpl() {
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
+    setHasPointer(window.matchMedia("(pointer: fine)").matches)
+  }, [])
+
+  useEffect(() => {
+    if (!hasPointer) return
     const tick = () => {
       const el = dotRef.current
       x.current += (targetX.current - x.current) * 0.22
@@ -68,7 +74,9 @@ function CustomCursorImpl() {
       window.removeEventListener("mousemove", onMove)
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
     }
-  }, [])
+  }, [hasPointer])
+
+  if (!hasPointer) return null
 
   return (
     <div

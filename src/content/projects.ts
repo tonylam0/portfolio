@@ -21,8 +21,6 @@ export const projects: Project[] = [
     tags: ["Best AI & Data Science Hack", "AI"],
     previewImage: "/projects/wallhax.jpeg",
     links: [
-      { label: "Demo", href: "https://youtu.be/II26dfXLtV0?si=kI4TycO0T1HWsRAU" },
-      { label: "GitHub", href: "https://github.com/HyunLee8/wallhax" },
       { label: "Devpost", href: "https://devpost.com/software/wallhax-896ck3" }
     ]
   },
