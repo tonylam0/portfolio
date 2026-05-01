@@ -111,7 +111,7 @@ export function EmailModal({ open, onClose }: Props) {
             className="relative w-full max-w-[420px] overflow-hidden rounded-[14px] border shadow-[0_24px_60px_-20px_rgba(30,26,22,0.28)]"
             style={{
               background: "rgba(240,235,227,0.42)",
-              backdropFilter: "blur(20px) saturate(180%)",
+              backdropFilter: "blur(15px) saturate(180%)",
               WebkitBackdropFilter: "blur(20px) saturate(180%)",
               borderColor: "rgba(255,255,255,0.3)",
               isolation: "isolate",

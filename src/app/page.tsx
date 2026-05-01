@@ -14,7 +14,7 @@ export default function Page() {
 
   return (
     <>
-      <PaperDesignShaderBackground />
+      <PaperDesignShaderBackground slowed={emailOpen} />
       <GrainOverlay />
       <CustomCursor />
 

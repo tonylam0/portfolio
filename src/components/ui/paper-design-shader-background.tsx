@@ -6,23 +6,30 @@ import { GrainGradient } from "@paper-design/shaders-react"
 const MIN_PIXEL_RATIO = 1
 const MAX_PIXEL_COUNT = 960 * 540
 const BASE_SPEED = 0.45
-const TARGET_FPS = 30
-const FRAME_INTERVAL_MS = 1000 / TARGET_FPS
-const FRAME_STEP = BASE_SPEED * FRAME_INTERVAL_MS
+const NORMAL_FPS = 30
+const SLOW_FPS = 7
+const NORMAL_INTERVAL_MS = 1000 / NORMAL_FPS
+const SLOW_INTERVAL_MS = 1000 / SLOW_FPS
+const FRAME_STEP = BASE_SPEED * NORMAL_INTERVAL_MS
 
 const WEBGL_ATTRS = {
   powerPreference: "high-performance" as const,
   antialias: false,
 }
 
-function PaperDesignShaderBackgroundImpl() {
+type Props = {
+  slowed?: boolean
+}
+
+function PaperDesignShaderBackgroundImpl({ slowed = false }: Props) {
   const [frame, setFrame] = useState(0)
+  const intervalMs = slowed ? SLOW_INTERVAL_MS : NORMAL_INTERVAL_MS
 
   useEffect(() => {
     let id: ReturnType<typeof setInterval> | null = null
     const start = () => {
       if (id !== null) return
-      id = setInterval(() => setFrame((f) => f + FRAME_STEP), FRAME_INTERVAL_MS)
+      id = setInterval(() => setFrame((f) => f + FRAME_STEP), intervalMs)
     }
     const stop = () => {
       if (id === null) return
@@ -36,7 +43,7 @@ function PaperDesignShaderBackgroundImpl() {
       stop()
       document.removeEventListener("visibilitychange", onVisibility)
     }
-  }, [])
+  }, [intervalMs])
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
