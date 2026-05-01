@@ -113,11 +113,11 @@ export function ProjectList() {
         </h2>
       </div>
 
-      {/* Floating preview card */}
+      {/* Floating preview card — hidden on touch/mobile */}
       <div
         ref={previewRef}
         aria-hidden="true"
-        className="pointer-events-none fixed z-50 overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="pointer-events-none fixed z-50 hidden overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] sm:block"
         style={{
           width: 260,
           height: 168,

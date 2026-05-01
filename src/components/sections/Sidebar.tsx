@@ -10,7 +10,7 @@ type Props = {
 
 export function Sidebar({ onEmailClick }: Props) {
   return (
-    <aside className="sticky top-16 flex flex-col gap-8 pr-12">
+    <aside className="flex items-start justify-between sm:sticky sm:top-16 sm:flex-col sm:items-stretch sm:justify-start sm:gap-8 sm:pr-12">
       <div className="flex flex-col gap-3">
         <h1 className="text-[18px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
           tony lam
@@ -20,7 +20,7 @@ export function Sidebar({ onEmailClick }: Props) {
         </p>
       </div>
 
-      <nav className="flex flex-col gap-1.5">
+      <nav className="flex flex-wrap justify-end gap-x-4 gap-y-1 sm:flex-col sm:justify-start sm:gap-1.5">
         {linkedinUrl ? (
           <a className="nav-link" href={linkedinUrl} target="_blank" rel="noreferrer">
             linkedin

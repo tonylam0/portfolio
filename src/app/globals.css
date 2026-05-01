@@ -58,6 +58,12 @@
     cursor: none !important;
   }
 
+  @media (pointer: coarse) {
+    * {
+      cursor: auto !important;
+    }
+  }
+
   html {
     @apply font-sans;
     height: 100%;
