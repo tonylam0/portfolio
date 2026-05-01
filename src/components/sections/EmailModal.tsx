@@ -16,6 +16,7 @@ export function EmailModal({ open, onClose }: Props) {
   const [message, setMessage] = useState("")
   const [status, setStatus] = useState<SendStatus>("idle")
   const [errorMsg, setErrorMsg] = useState("")
+  const [tried, setTried] = useState(false)
 
   useEffect(() => {
     if (!open) return
@@ -31,6 +32,7 @@ export function EmailModal({ open, onClose }: Props) {
       const t = window.setTimeout(() => {
         setStatus("idle")
         setErrorMsg("")
+        setTried(false)
       }, 250)
       return () => window.clearTimeout(t)
     }
@@ -39,11 +41,20 @@ export function EmailModal({ open, onClose }: Props) {
   const canSubmit =
     name.trim().length > 0 &&
     /\S+@\S+\.\S+/.test(email) &&
-    message.trim().length >= 10 &&
+    message.trim().length >= 1 &&
     status !== "sending"
+
+  const fieldErrors = tried
+    ? {
+      name: name.trim().length === 0 ? "name required" : null,
+      email: !/\S+@\S+\.\S+/.test(email) ? "valid email required" : null,
+      message: message.trim().length === 0 ? "message required" : null,
+    }
+    : { name: null, email: null, message: null }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setTried(true)
     if (!canSubmit) return
     setStatus("sending")
     setErrorMsg("")
@@ -135,7 +146,7 @@ export function EmailModal({ open, onClose }: Props) {
                     message sent.
                   </p>
                   <p className="text-[12px] leading-relaxed tracking-[-0.011em] lowercase text-[#6a6050]">
-                    thanks — i&apos;ll reply soon.
+                    thanks for sending the message.
                   </p>
                   <button
                     type="button"
@@ -147,27 +158,43 @@ export function EmailModal({ open, onClose }: Props) {
                 </div>
               ) : (
                 <form onSubmit={onSubmit} className="flex flex-col gap-3">
-                  <input
-                    className="modal-input"
-                    placeholder="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    autoComplete="name"
-                  />
-                  <input
-                    className="modal-input"
-                    placeholder="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
-                  />
-                  <textarea
-                    className="modal-input min-h-[110px] resize-y"
-                    placeholder="your message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                  />
+                  <div className="flex flex-col gap-0.5">
+                    <input
+                      className="modal-input"
+                      placeholder="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
+                    />
+                    {fieldErrors.name && (
+                      <p className="text-[10px] lowercase text-[#a04040]">{fieldErrors.name}</p>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <input
+                      className="modal-input"
+                      placeholder="email"
+                      type="text"
+                      inputMode="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      autoComplete="email"
+                    />
+                    {fieldErrors.email && (
+                      <p className="text-[10px] lowercase text-[#a04040]">{fieldErrors.email}</p>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <textarea
+                      className="modal-input min-h-[110px] resize-y"
+                      placeholder="your message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    />
+                    {fieldErrors.message && (
+                      <p className="text-[10px] lowercase text-[#a04040]">{fieldErrors.message}</p>
+                    )}
+                  </div>
 
                   {status === "error" && errorMsg ? (
                     <p className="text-[11px] lowercase text-[#a04040]">
@@ -177,12 +204,13 @@ export function EmailModal({ open, onClose }: Props) {
 
                   <div className="mt-3 flex items-center justify-between">
                     <span className="text-[10px] lowercase text-[#a09880]">
-                      {message.length}/280 — 2-4 sentences is plenty
+                      {message.length}/280
                     </span>
                     <button
                       type="submit"
-                      disabled={!canSubmit}
-                      className="group relative bg-transparent p-0 text-[12px] lowercase text-[#6a6050] transition-colors duration-200 hover:text-[#1e1a16] disabled:cursor-not-allowed disabled:opacity-50"
+                      aria-disabled={!canSubmit}
+                      className={`group relative bg-transparent p-0 text-[12px] lowercase text-[#6a6050] transition-colors duration-200 hover:text-[#1e1a16] ${!canSubmit ? "opacity-50" : ""
+                        }`}
                     >
                       <span className="inline-flex items-center gap-1">
                         {status === "sending" ? "sending…" : "send"}

@@ -100,7 +100,7 @@ export const projects: Project[] = [
     description: "A physics-based simulation of the inner solar system and orbital mechanics.",
     listDescription: "physics-driven orbital mechanics simulation of the inner solar system.",
     year: "2024",
-    tags: ["Simulation", "Math"],
+    tags: ["Math", "Simulation"],
     gridClassName: "col-span-1 md:col-span-5 md:row-span-2",
     problem: "Accurately model complex gravitational attraction and orbital physics in real-time.",
     stack: ["Python", "Pygame"],
