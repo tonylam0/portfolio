@@ -18,7 +18,7 @@ export const projects: Project[] = [
     description: "An award-winning multi-device AR platform with post-mission 3D environmental rendering for shared situational awareness.",
     listDescription: "award-winning ar collaboration app for shared situational awareness.",
     year: "2026",
-    tags: ["Best AI & Data Science Hack", "AI"],
+    tags: ["Best AI & Data Science Hack", "ios"],
     previewImage: "/projects/wallhax.jpeg",
     links: [
       { label: "Devpost", href: "https://devpost.com/software/wallhax-896ck3" }
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     id: "digits-recognition",
     title: "Digits Recognition",
     description: "A neural network built entirely from scratch without external ML frameworks.",
-    listDescription: "neural network from scratch w/o using machine learning frameworks.",
+    listDescription: "neural network from scratch w/o any external machine learning frameworks.",
     year: "2025",
     tags: ["AI", "Math"],
     previewImage: "/projects/digits.png",
