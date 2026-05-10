@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import { projects } from "@/content/projects"
 
 const TAG_STYLES: Record<string, { color: string; background: string }> = {
@@ -18,6 +19,7 @@ const REST_EPSILON = 0.1
 
 export function ProjectList() {
   const [hasPointer, setHasPointer] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
   const previewRef = useRef<HTMLDivElement | null>(null)
@@ -27,6 +29,7 @@ export function ProjectList() {
 
   useEffect(() => {
     setHasPointer(window.matchMedia("(pointer: fine)").matches)
+    setMounted(true)
   }, [])
 
   const tickRef = useRef<() => void>(() => { })
@@ -44,8 +47,8 @@ export function ProjectList() {
 
       const el = previewRef.current
       if (el) {
-        el.style.left = `${smoothPos.current.x - 100}px`
-        el.style.top = `${smoothPos.current.y - 100}px`
+        el.style.left = `${smoothPos.current.x + 36}px`
+        el.style.top = `${smoothPos.current.y - 84}px`
       }
 
       const dx = targetPos.current.x - smoothPos.current.x
@@ -58,8 +61,8 @@ export function ProjectList() {
     }
 
     const onMove = (e: MouseEvent) => {
-      targetPos.current.x = e.pageX
-      targetPos.current.y = e.pageY
+      targetPos.current.x = e.clientX
+      targetPos.current.y = e.clientY
       startLoop()
     }
 
@@ -117,48 +120,53 @@ export function ProjectList() {
         </h2>
       </div>
 
-      {/* Floating preview card — pointer devices only */}
-      <div
-        ref={previewRef}
-        aria-hidden="true"
-        className={`pointer-events-none fixed z-50 overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${hasPointer ? "block" : "hidden"}`}
-        style={{
-          width: 260,
-          height: 168,
-          left: 0,
-          top: 0,
-          opacity: visible ? 1 : 0,
-          transform: visible ? "scale(1)" : "scale(0.88)",
-          willChange: "transform, left, top",
-        }}
-      >
-        {projects.map((p) => (
-          <div
-            key={p.id}
-            className="absolute inset-0 transition-[opacity,transform,filter] duration-[400ms] ease-out"
-            style={{
-              opacity: hoveredId === p.id ? 1 : 0,
-              transform: hoveredId === p.id ? "scale(1)" : "scale(1.08)",
-              filter: hoveredId === p.id ? "none" : "blur(6px)",
-            }}
-          >
-            {p.previewImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={p.previewImage}
-                alt={p.title}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div
-                className="h-full w-full"
-                style={{ background: "linear-gradient(135deg,#1a1a2e,#2d2d4e)" }}
-              />
-            )}
-          </div>
-        ))}
-        <div className="absolute inset-0 rounded-[10px] bg-gradient-to-t from-black/20 to-transparent" />
-      </div>
+      {/* Floating preview card — pointer devices only. Portaled to body so
+          `position: fixed` is scoped to the viewport, not an ancestor whose
+          `filter`/`transform` would otherwise establish a containing block. */}
+      {mounted && hasPointer && createPortal(
+        <div
+          ref={previewRef}
+          aria-hidden="true"
+          className="pointer-events-none fixed z-50 overflow-hidden rounded-[10px] shadow-[0_8px_32px_rgba(0,0,0,0.22)] transition-[opacity,transform] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+          style={{
+            width: 260,
+            height: 168,
+            left: 0,
+            top: 0,
+            opacity: visible ? 1 : 0,
+            transform: visible ? "scale(1)" : "scale(0.88)",
+            willChange: "transform, left, top",
+          }}
+        >
+          {projects.map((p) => (
+            <div
+              key={p.id}
+              className="absolute inset-0 transition-[opacity,transform,filter] duration-[400ms] ease-out"
+              style={{
+                opacity: hoveredId === p.id ? 1 : 0,
+                transform: hoveredId === p.id ? "scale(1)" : "scale(1.08)",
+                filter: hoveredId === p.id ? "none" : "blur(6px)",
+              }}
+            >
+              {p.previewImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={p.previewImage}
+                  alt={p.title}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div
+                  className="h-full w-full"
+                  style={{ background: "linear-gradient(135deg,#1a1a2e,#2d2d4e)" }}
+                />
+              )}
+            </div>
+          ))}
+          <div className="absolute inset-0 rounded-[10px] bg-gradient-to-t from-black/20 to-transparent" />
+        </div>,
+        document.body,
+      )}
 
       {/* Project rows */}
       {projects.map((p) => (
@@ -171,8 +179,8 @@ export function ProjectList() {
           onMouseEnter={hasPointer ? (e) => {
             setHoveredId(p.id)
             setVisible(true)
-            targetPos.current.x = e.pageX
-            targetPos.current.y = e.pageY
+            targetPos.current.x = e.clientX
+            targetPos.current.y = e.clientY
             startLoop()
           } : undefined}
           onMouseLeave={hasPointer ? () => {
