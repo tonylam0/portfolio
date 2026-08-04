@@ -12,7 +12,7 @@ export const experience: Experience[] = [
     id: "bluelearn",
     org: "bluelearn",
     role: "director of technology",
-    description: "directing engineering on a nonprofit learning platform that facilitates universal access to free, structured educational material.",
+    description: "a nonprofit learning platform that facilitates universal access to free, structured educational material. 5000+ member community",
     period: "may 2026 — present",
     tags: ["Web", "educational", "nonprofit"],
   },
