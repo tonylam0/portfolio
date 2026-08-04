@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { projects } from "@/content/projects"
+import { experience } from "@/content/experience"
 
 const TAG_STYLES: Record<string, { color: string; background: string }> = {
   AI: { color: "#6f4a84", background: "rgba(123,79,142,0.12)" },
@@ -13,6 +14,8 @@ const TAG_STYLES: Record<string, { color: string; background: string }> = {
   typescript: { color: "#2e5f9d", background: "rgba(95,133,197,0.16)" },
   aws: { color: "#8a5e22", background: "rgba(219,164,90,0.18)" },
   node: { color: "#3d6e3c", background: "rgba(123,170,111,0.18)" },
+  educational: { color: "#4a4e9c", background: "rgba(90,95,180,0.14)" },
+  nonprofit: { color: "#9a4a3a", background: "rgba(185,95,75,0.15)" },
 }
 
 const REST_EPSILON = 0.1
@@ -82,36 +85,48 @@ export function ProjectList() {
           </h2>
         </div>
 
-        <div className="flex items-start justify-between gap-6 border-y border-[rgba(30,26,22,0.12)] py-4">
-          <div className="min-w-0 flex-1">
-            <div className="mb-2 flex items-center gap-1.5">
-              <span className="text-[15px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
-                cargolabs
-              </span>
-            </div>
-            <p className="text-[12px] font-normal leading-[1.55] lowercase tracking-[-0.011em] text-[#6a6050]">
-              building serverless aws workflows and react interfaces for freight logistics.
-            </p>
-          </div>
-
-          <div className="flex shrink-0 flex-col items-end gap-2">
-            <span className="font-mono text-[10px] text-[#8a8070]">mar 2026 — present</span>
-            <div className="flex flex-wrap justify-end gap-2">
-              {["typescript", "aws", "node"].map((tag) => {
-                const s = TAG_STYLES[tag] ?? { color: "#6a6050", background: "rgba(0,0,0,0.05)" }
-                return (
-                  <span
-                    key={tag}
-                    className="rounded-[10px] px-2 py-[3px] text-[9px] font-semibold lowercase tracking-[0.01em]"
-                    style={{ color: s.color, background: s.background }}
-                  >
-                    {tag}
+        {experience.map((e) => (
+          <div
+            key={e.id}
+            className="flex items-start justify-between gap-6 border-t border-[rgba(30,26,22,0.12)] py-4 last:border-b"
+          >
+            <div className="min-w-0 flex-1">
+              <div className="mb-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[15px] font-semibold lowercase tracking-[-0.022em] text-[#1e1a16]">
+                    {e.org}
                   </span>
-                )
-              })}
+                </div>
+                {e.role && (
+                  <p className="-mt-[1px] text-[12px] font-medium lowercase tracking-[-0.015em] text-[#3a342c]">
+                    {e.role}
+                  </p>
+                )}
+              </div>
+              <p className="text-[12px] font-normal leading-[1.55] lowercase tracking-[-0.011em] text-[#6a6050]">
+                {e.description}
+              </p>
+            </div>
+
+            <div className="flex shrink-0 flex-col items-end gap-2">
+              <span className="font-mono text-[10px] text-[#8a8070]">{e.period}</span>
+              <div className="flex flex-wrap justify-end gap-2">
+                {e.tags.map((tag) => {
+                  const s = TAG_STYLES[tag] ?? { color: "#6a6050", background: "rgba(0,0,0,0.05)" }
+                  return (
+                    <span
+                      key={tag}
+                      className="rounded-[10px] px-2 py-[3px] text-[9px] font-semibold lowercase tracking-[0.01em]"
+                      style={{ color: s.color, background: s.background }}
+                    >
+                      {tag}
+                    </span>
+                  )
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
       <div className="mb-6 flex items-center justify-between">
