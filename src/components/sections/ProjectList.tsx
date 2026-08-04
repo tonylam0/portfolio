@@ -6,16 +6,15 @@ import { projects } from "@/content/projects"
 import { experience } from "@/content/experience"
 
 const TAG_STYLES: Record<string, { color: string; background: string }> = {
-  AI: { color: "#6f4a84", background: "rgba(123,79,142,0.12)" },
-  Web: { color: "#4c8f81", background: "rgba(95,168,152,0.12)" },
-  Math: { color: "#756c2a", background: "rgba(196,190,90,0.17)" },
-  Simulation: { color: "#356b61", background: "rgba(172,207,163,0.22)" },
-  Creative: { color: "#8f3b71", background: "rgba(196,127,168,0.16)" },
-  typescript: { color: "#2e5f9d", background: "rgba(95,133,197,0.16)" },
-  aws: { color: "#8a5e22", background: "rgba(219,164,90,0.18)" },
-  node: { color: "#3d6e3c", background: "rgba(123,170,111,0.18)" },
+  ai: { color: "#6f4a84", background: "rgba(123,79,142,0.12)" },
+  web: { color: "#4c8f81", background: "rgba(95,168,152,0.12)" },
+  math: { color: "#756c2a", background: "rgba(196,190,90,0.17)" },
+  simulation: { color: "#356b61", background: "rgba(172,207,163,0.22)" },
+  creative: { color: "#8f3b71", background: "rgba(196,127,168,0.16)" },
   educational: { color: "#4a4e9c", background: "rgba(90,95,180,0.14)" },
   nonprofit: { color: "#9a4a3a", background: "rgba(185,95,75,0.15)" },
+  insurance: { color: "#2e5f9d", background: "rgba(95,133,197,0.16)" },
+  b2b: { color: "#8a5e22", background: "rgba(219,164,90,0.18)" },
 }
 
 const REST_EPSILON = 0.1

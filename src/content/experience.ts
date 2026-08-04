@@ -14,14 +14,14 @@ export const experience: Experience[] = [
     role: "director of technology",
     description: "a nonprofit learning platform that facilitates universal access to free, structured educational material. 5000+ member community",
     period: "may 2026 — present",
-    tags: ["Web", "educational", "nonprofit"],
+    tags: ["web", "educational", "nonprofit"],
   },
   {
     id: "cargolabs",
     org: "cargolabs",
     role: "software engineer intern",
-    description: "building serverless aws workflows and react interfaces for freight logistics.",
+    description: "a marketplace making truck insurance instant and self-serve for the freight industry.",
     period: "mar 2026 — present",
-    tags: ["typescript", "aws", "node"],
+    tags: ["web", "insurance", "b2b"],
   },
 ]
